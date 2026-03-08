@@ -1,7 +1,7 @@
-# 1. GitHub 정책 문서에 추가할 사항
-GitHub를 Issue / PR / Wiki / Action 용
+# 1. GitHub 정책 문서
+ Issue / PR / Wiki / Action 용
 
-추가하면 좋은 섹션
+추가 섹션
 
 ### 1) Branch Naming Convention
 ## Branch Naming Convention
@@ -74,7 +74,7 @@ CI 결과가 실패한 경우 main 브랜치에 병합하지 않는다.
 
 ---
 
-# 2. DEVELOPMENT.md에 추가 가능 사항
+# 2. DEVELOPMENT.md에 추가 사항
 설치후 사용법
 
 ### 추가 1) Build Instructions
