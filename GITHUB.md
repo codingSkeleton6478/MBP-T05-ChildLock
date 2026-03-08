@@ -256,7 +256,7 @@ project
 까지 기본적으로 도는 예시다.
 
 **전제:**
-- 프로젝트 루트에 'CMakeLists.txt' 있음
+- 프로젝트 루트에 `CMakeLists.txt` 있음
 - 테스트는 `ctest`로 실행 가능
 - 소스는 `src/`, 테스트는 `test/`
 
