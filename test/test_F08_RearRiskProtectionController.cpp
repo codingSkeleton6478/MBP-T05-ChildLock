@@ -11,10 +11,12 @@
  *            - Handle null pointers safely.
  *          Achieves high Statement, Branch and MC/DC coverage.
  *
- * @version 1.0.0
+ * @version 1.1.0
  * @date    2026-03-11
- * @author  AI Model: Gemini 3.5 Pro
+ * @author  AI Model: Gemini 3.5 Pro (review & fix)
  * @copyright Synetics 20 CopyrightⓒSynetics_
+ * @note    v1.1.0: Updated SensorFault test to expect warningSound=true
+ *          per corrected SAFE_LOCKED HMI alert policy.
  */
 
 #include <gtest/gtest.h>
@@ -100,12 +102,11 @@ TEST_F(F08RearRiskProtectionTest, SensorFault_InvalidRisk_ForceSafeState) {
 
     F08_RearRiskProtectionController_Run(&input, &output);
 
-    // Fallback to SAFE_LOCKED -> Forces CL ON
     EXPECT_EQ(output.targetCLState, CL_STATE_ON);
     EXPECT_TRUE(output.clChanged);
     EXPECT_EQ(output.warningMsgId, WARNING_MSG_SENSOR_FAULT);
-    // Beep may be omitted for fault, but let's check code logic explicitly
-    EXPECT_FALSE(output.warningSound); 
+    /* v1.1.0 Fix: warningSound MUST be true on fault (SAFE_LOCKED policy) */
+    EXPECT_TRUE(output.warningSound);
 }
 
 TEST_F(F08RearRiskProtectionTest, SensorFault_CLWasAlreadyOn) {

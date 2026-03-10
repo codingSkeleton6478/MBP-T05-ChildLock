@@ -2,19 +2,21 @@
  * @file    F08_RearRiskProtectionController.c
  * @brief   F-08: Rear Risk Protection Controller Module - Implementation
  *
- * @details Implements protection actions for UC-5. 
+ * @details Implements protection actions for UC-5.
  *          Forces Child Lock to ON if high risk is reported.
  *          Implements the SAFE_LOCKED fallback policy for sensor faults.
  *
- * @version 1.0.0
+ * @version 1.1.0
  * @date    2026-03-11
- * @author  AI Model: Gemini 3.5 Pro
+ * @author  AI Model: Gemini 3.5 Pro (review & fix)
  * @copyright Synetics 20 CopyrightⓒSynetics_
  *
  * @req_id  REQ-SW-ESA-002
  * @asil    ASIL B
  * @traceability DD-CL-F08, UC-5
  *
+ * @note v1.1.0: Fixed warningSound=false->true on sensor fault path
+ *              per SDD 5.2.3 SAFE_LOCKED policy (HMI alert mandatory).
  * @note Function length <= 80 lines. Cyclomatic Complexity <= 10.
  * @note No dynamic memory allocation.
  */
@@ -73,11 +75,13 @@ void F08_RearRiskProtectionController_Run(
     /* Failure Mode Handling: If sensor result is invalid (faulty) */
     if (!input->riskValid)
     {
-        /* Safe State Policy (SDD 5.2.3): SAFE_LOCKED -> Force CL ON */
+        /* Safe State Policy (SDD 5.2.3): SAFE_LOCKED -> Force CL ON.
+         * HMI alert (sound + message) is MANDATORY even for faults
+         * to ensure the driver is always informed of abnormal state. */
         output->targetCLState = CL_STATE_ON;
         output->warningMsgId  = WARNING_MSG_SENSOR_FAULT;
-        output->warningSound  = false; /* Faults may not need urgent beep */
-        
+        output->warningSound  = true; /* Mandatory: driver must be alerted on fault */
+
         if (input->currentCLState == CL_STATE_OFF)
         {
             output->clChanged = true;
