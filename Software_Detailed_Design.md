@@ -108,7 +108,7 @@
 | `STATE_RESTORE` | IGN 리셋 또는 재부팅 | NVM에서 직전 상태 복구 후 Door ECU와 재동기화 |
 
 #### 5.1.4 Flow Chart (도어 잠금/해제 제어)
-![FG-01](https://github.com/MBP-T05/MBP-T05-ChildLock/blob/docs/childlock-uml-modeling-1/doc/uml_diagram/flow_chart/FG-01_door_control.png?raw=true)
+![FG-01](diagram/flow_chart/FG-01_door_control.png)
 
 
 ---
@@ -158,7 +158,7 @@
 | `HMI_WATCHDOG_FALLBACK` | HMI 응답 지연/실패 | 대체 채널 경고 시도 또는 로그 저장 후 종료 |
 
 #### 5.2.4 Flow Chart (하차 안전 보조)
-![Fg-02](https://github.com/MBP-T05/MBP-T05-ChildLock/blob/docs/childlock-uml-modeling-1/doc/uml_diagram/flow_chart/FG-02_exit_safety.png?raw=true)
+![Fg-02](diagram/flow_chart/FG-02_exit_safety.png)
 
 ---
 

@@ -5,12 +5,12 @@
 <div align="center">
 
 ### Normal Operation
-![Use Case Normal](https://github.com/MBP-T05/MBP-T05-ChildLock/blob/childlock-Failure-Mode-modeling/diagram/usecase/Use%20Case_normal.png?raw=true)
+![Use Case Normal](diagram/usecase/usecase_normal.png)
 
 <br>
 
 ### Emergency Operation
-![Use Case Emergency](https://github.com/MBP-T05/MBP-T05-ChildLock/blob/childlock-Failure-Mode-modeling/diagram/usecase/Use%20Case_emergency.png?raw=true)
+![Use Case Emergency](diagram/usecase/usecase_emergency.png)
 
 </div>
 
@@ -114,37 +114,37 @@
 <div align="center">
 
 ### 3.1 운전자 차일드 락 전자식 ON/OFF 제어
-![Sequence UC1](https://github.com/MBP-T05/MBP-T05-ChildLock/blob/childlock-Failure-Mode-modeling/diagram/sequence/use%20case%201.png?raw=true)
+![Sequence UC1](diagram/sequence/sequence_uc1.png)
 
 <br>
 
 ### 3.2 차량 출발 시 자동 차일드 락 활성화
-![Sequence UC2](https://github.com/MBP-T05/MBP-T05-ChildLock/blob/childlock-Failure-Mode-modeling/diagram/sequence/use%20case%202.png?raw=true)
+![Sequence UC2](diagram/sequence/sequence_uc2.png)
 
 <br>
 
 ### 3.3 사고 발생 시 차일드 락 자동 해제
-![Sequence UC3](https://github.com/MBP-T05/MBP-T05-ChildLock/blob/childlock-Failure-Mode-modeling/diagram/sequence/use%20case%203.png?raw=true)
+![Sequence UC3](diagram/sequence/sequence_uc3.png)
 
 <br>
 
 ### 3.4 뒷좌석 내부 문 열기 시도 차단
-![Sequence UC4](https://github.com/MBP-T05/MBP-T05-ChildLock/blob/childlock-Failure-Mode-modeling/diagram/sequence/use%20case%204.png?raw=true)
+![Sequence UC4](diagram/sequence/sequence_uc4.png)
 
 <br>
 
 ### 3.5 후방 위험 접근 시 자동 활성화 및 경고
-![Sequence UC5](https://github.com/MBP-T05/MBP-T05-ChildLock/blob/childlock-Failure-Mode-modeling/diagram/sequence/use%20case%205.png?raw=true)
+![Sequence UC5](diagram/sequence/sequence_uc5.png)
 
 <br>
 
 ### 3.6 뒷좌석 점유 및 출발 시 알림
-![Sequence UC6](https://github.com/MBP-T05/MBP-T05-ChildLock/blob/childlock-Failure-Mode-modeling/diagram/sequence/use%20case%206.png?raw=true)
+![Sequence UC6](diagram/sequence/sequence_uc6.png)
 
 <br>
 
 ### 3.7 도착 후 시동 OFF 시 상태 알림
-![Sequence UC7](https://github.com/MBP-T05/MBP-T05-ChildLock/blob/childlock-Failure-Mode-modeling/diagram/sequence/use%20case%207.png?raw=true)
+![Sequence UC7](diagram/sequence/sequence_uc7.png)
 
 </div>
 
@@ -154,6 +154,6 @@
 
 <div align="center">
 
-![State Diagram](https://github.com/MBP-T05/MBP-T05-ChildLock/blob/childlock-Failure-Mode-modeling/diagram/state/state_diagram.png?raw=true)
+![State Diagram](diagram/state/childlock_state.png)
 
 </div>
