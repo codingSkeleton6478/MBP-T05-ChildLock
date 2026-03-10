@@ -1,0 +1,41 @@
+@startuml
+title System State Diagram (Simplified)
+
+hide empty description
+skinparam shadowing false
+
+[*] --> IGN_OFF
+
+IGN_OFF --> ACTIVE : ign_on
+ACTIVE --> IGN_OFF : ign_off
+
+state ACTIVE {
+
+  [*] --> CL_OFF
+
+  ' =====================
+  ' 정상 제어 흐름
+  ' =====================
+  CL_OFF --> CL_ON : driver_switch_on\n(UC-1)
+  CL_ON --> CL_OFF : driver_switch_off\n[vehicle_speed <= 3km/h]
+
+  CL_OFF --> CL_ON : speed_threshold_exceeded\n(UC-2)
+
+  CL_OFF --> CL_ON : rear_risk_high\n(UC-5)
+
+  CL_OFF --> EMERGENCY_RELEASED : crash_signal\n(UC-3)
+  CL_ON --> EMERGENCY_RELEASED : crash_signal\n(UC-3)
+
+  ' =====================
+  ' Safe State (간략)
+  ' =====================
+  CL_OFF --> SAFE_LOCKED : sensor_fault\nor speed_signal_error
+  CL_ON --> SAFE_LOCKED : sensor_fault\nor speed_signal_error
+
+  SAFE_LOCKED : Fail-safe\nCL 강제 ON 유지
+
+  SAFE_LOCKED --> CL_ON : fault_cleared
+
+}
+
+@enduml

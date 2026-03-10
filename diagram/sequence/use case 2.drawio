@@ -1,0 +1,59 @@
+@startuml
+title SD-2 (UC-2) 차량 출발 시 자동 차일드락 활성화 - 예외 반영
+
+participant "차량 속도 제공" as Speed
+participant "ChildLock SW" as SW
+participant "Door ECU" as ECU
+participant "HMI/클러스터" as HMI
+database Logger
+
+== 기본 흐름 ==
+
+Speed -> SW : VehicleSpeed 업데이트
+SW -> SW : 임계값 초과 여부 판단
+
+alt VehicleSpeed > Threshold and CL == OFF
+    SW -> ECU : ChildLockCommand(ON)
+    ECU --> SW : ACK / 적용 상태
+    SW -> HMI : 자동 활성화 상태 표시
+    SW -> Logger : 자동 활성화 이벤트 기록
+else CL == ON
+    SW -> Logger : 자동 활성화 조건 만족\n(상태 유지 로그 기록)
+end
+
+== Exception 1 : 속도 신호 오류 ==
+
+opt SpeedSignal invalid
+    SW -> SW : ABS/WheelSpeed 신호 이중화 검증 수행
+
+    alt 신호 불일치 또는 오류
+        SW -> ECU : ChildLockCommand(ON)
+        SW -> HMI : "속도 신호 오류" 경고 표시
+        SW -> Logger : DTC 저장
+        note right
+          Fail-safe 전략\nCL ON 유지
+        end note
+    end
+end
+
+== Exception 2 : 전원 리셋 발생 ==
+
+SW -> SW : IGN 리셋 감지
+
+alt 자동 설정값 초기화됨
+    SW -> SW : NVM에서 설정값 복구
+    SW -> SW : 현재 속도 기반 상태 재평가
+
+    alt VehicleSpeed > Threshold
+        SW -> ECU : ChildLockCommand(ON)
+    end
+end
+
+== Exception 3 : 지속 오류 ==
+
+opt 지속적인 속도 오류 발생
+    SW -> Logger : DTC 저장
+    SW -> HMI : 경고 메시지 표시
+end
+
+@enduml

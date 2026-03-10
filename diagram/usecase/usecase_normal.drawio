@@ -1,0 +1,54 @@
+@startuml
+' 레이아웃 방향 설정
+left to right direction
+skinparam packageStyle rectangle
+
+' 액터 정의
+actor "운전자" as Driver
+actor "뒷좌석 탑승자" as RearPassenger
+actor "뒷좌석 점유 센서" as OccSensor
+actor "차량 속도 제공" as SpeedSrc
+actor "시동 상태 제공" as IgnSrc
+actor "도어 ECU" as DoorECU
+
+rectangle "전자식 차일드락 제어 SW\n(ChildLock SW)" {
+  usecase "UC-1\n운전자 차일드락\n전자식 ON/OFF 제어" as UC1
+  usecase "UC-2\n차량 출발/주행 중\n자동 차일드락 활성화" as UC2
+  usecase "UC-4\n뒷좌석 내부\n문 열기 시도 차단" as UC4
+  usecase "UC-6\n뒷좌석 점유 + 출발 시\n상태/권장 알림" as UC6
+  usecase "UC-7\n도착 후 시동 OFF 시\n차일드락 상태 알림" as UC7
+
+  usecase "도어 ECU 제어 명령 전송" as INC_ECU
+  usecase "HMI 상태 표시/알림" as INC_HMI
+  usecase "이벤트 로그 기록" as INC_LOG
+
+  ' 유스케이스 간 포함 관계 (표준 점선 화살표 적용)
+  UC1 ..> INC_ECU : <<include>>
+  UC1 ..> INC_HMI : <<include>>
+  UC1 ..> INC_LOG : <<include>>
+
+  UC2 ..> INC_ECU : <<include>>
+  UC2 ..> INC_HMI : <<include>>
+  UC2 ..> INC_LOG : <<include>>
+
+  UC4 ..> INC_LOG : <<include>>
+
+  UC6 ..> INC_HMI : <<include>>
+  UC6 ..> INC_LOG : <<include>>
+
+  UC7 ..> INC_HMI : <<include>>
+  UC7 ..> INC_LOG : <<include>>
+}
+
+' 외부 액터와 유스케이스 연결
+Driver --> UC1
+Driver --> UC6
+Driver --> UC7
+RearPassenger --> UC4
+
+OccSensor --> UC6
+SpeedSrc --> UC2
+IgnSrc --> UC7
+DoorECU --> INC_ECU
+
+@enduml

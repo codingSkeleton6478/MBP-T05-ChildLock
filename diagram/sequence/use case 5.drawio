@@ -1,0 +1,56 @@
+@startuml
+title SD-5 (UC-5) 후방 위험 접근 시 자동 활성화 및 운전자 경고 - 예외 반영
+
+participant "후방 위험 센서" as Sensor
+participant "ChildLock SW" as SW
+participant "Door ECU" as ECU
+participant "HMI/경고음" as HMI
+database Logger
+
+== 기본 흐름 ==
+
+Sensor -> SW : 접근 객체 감지\n(거리/접근속도)
+SW -> SW : 위험 임계치 초과 여부 판단
+SW -> SW : ChildLockState 조회
+
+alt ChildLockState == OFF
+    SW -> ECU : ChildLockCommand(ON)\n(뒷좌석 차일드락)
+    ECU --> SW : ACK / 적용 상태
+    SW -> HMI : 경고음 + 경고 메시지 출력
+    SW -> Logger : 자동 보호 이벤트 기록
+
+else ChildLockState == ON
+    SW -> HMI : 경고음 + 경고 메시지 출력
+    SW -> Logger : 상태 유지 로그 기록
+end
+
+== Exception 1 : 센서 신뢰도 저하 ==
+
+opt Sensor 신뢰도 Low
+    SW -> SW : 레이더 + 카메라 센서 융합\n위험 판단 알고리즘 적용
+
+    alt 융합 결과 위험 판단
+        SW -> ECU : ChildLockCommand(ON)
+    end
+end
+
+== Exception 2 : 센서 오류 ==
+
+opt Sensor fault
+    SW -> HMI : "후방 센서 오류" 표시
+    SW -> ECU : ChildLockCommand(ON)
+    SW -> Logger : 센서 오류 로그 기록
+    note right
+      Fail-safe 전략\nCL 유지
+    end note
+end
+
+== Exception 3 : 전원 리셋 후 초기화 지연 ==
+
+opt IGN 리셋 후 센서 초기화 중
+    SW -> SW : 보호 기능 유지
+    SW -> HMI : "센서 점검 중" 알림 표시
+    SW -> Logger : 초기화 지연 로그 기록
+end
+
+@enduml

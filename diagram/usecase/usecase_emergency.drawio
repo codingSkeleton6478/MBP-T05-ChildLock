@@ -1,0 +1,33 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor "활성화 버튼" as Driver
+actor "후방 위험 센서" as RearSensor
+actor "충돌/에어백 신호" as CrashSensor
+actor "도어 ECU" as DoorECU
+
+rectangle "전자식 차일드락 제어 SW\n(ChildLock SW)" {
+  usecase "UC-3\n사고 발생 시\n차일드락 자동 해제" as UC3
+  usecase "UC-5\n후방 위험 접근 시\n자동 활성화 + 운전자 경고" as UC5
+
+  usecase "도어 ECU 제어 명령 전송" as INC_ECU
+  usecase "HMI 경고(경고음/메시지)" as INC_HMI
+  usecase "이벤트 로그 기록" as INC_LOG
+
+  UC3 ..> INC_ECU : <<include>>
+  UC3 ..> INC_HMI : <<include>>
+  UC3 ..> INC_LOG : <<include>>
+
+  UC5 ..> INC_ECU : <<include>>
+  UC5 ..> INC_HMI : <<include>>
+  UC5 ..> INC_LOG : <<include>>
+}
+
+' 관계 설정
+CrashSensor --> UC3
+RearSensor --> UC5
+Driver --> UC5
+DoorECU --> INC_ECU
+
+@enduml

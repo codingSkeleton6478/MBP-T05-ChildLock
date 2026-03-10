@@ -1,0 +1,62 @@
+@startuml
+title SD-4 (UC-4) 뒷좌석 내부 문 열기 시도 차단 - 예외 반영
+
+actor "뒷문 손잡이(레버)" as Passenger
+participant "도어 내부 핸들" as Handle
+participant "ChildLock SW" as SW
+participant "Door ECU" as ECU
+participant "HMI/클러스터" as HMI
+database Logger
+
+== 기본 흐름 ==
+
+Passenger -> Handle : 내부 핸들 당김
+Handle -> SW : RearDoorInnerHandleEvent
+
+SW -> SW : ChildLockState 조회
+
+alt ChildLockState == ON
+    SW -> ECU : OpenRequestBlock(RearDoor)
+    ECU --> SW : ACK / 차단 적용
+
+    opt 필요 시 운전자 알림
+        SW -> HMI : "뒷좌석 도어 개방 시도 차단됨"
+    end
+
+    SW -> Logger : 개방 시도 차단 로그 기록
+
+else ChildLockState == OFF
+    SW -> ECU : OpenRequestAllow(RearDoor)
+    ECU --> SW : ACK / 개방 허용
+    SW -> Logger : 개방 허용 로그 기록
+end
+
+== Exception 1 : 래치 상태 불일치 ==
+
+opt Door 상태 ≠ 실제 래치 상태
+    SW -> ECU : 상태 재조회 요청
+    SW -> ECU : 차단/허용 재명령 수행
+
+    alt 재명령 실패
+        SW -> HMI : "도어 상태 오류" 경고 표시
+        SW -> Logger : 래치 불일치 DTC 저장
+    end
+end
+
+== Exception 2 : 전원 복구 후 동기화 ==
+
+opt IGN 리셋 후 복구
+    SW -> ECU : Door 상태 조회
+    ECU --> SW : 현재 래치 상태 반환
+    SW -> SW : 내부 상태 동기화
+    SW -> Logger : 전원 복구 동기화 로그 기록
+end
+
+== Exception 3 : 차단 실패 ==
+
+opt 차단 명령 적용 실패
+    SW -> HMI : "도어 제어 실패" 경고 표시
+    SW -> Logger : 차단 실패 DTC 기록
+end
+
+@enduml

@@ -1,0 +1,53 @@
+@startuml
+title SD-7 (UC-7) 시동 OFF 시 차일드락 상태 알림 - 위험 시나리오 반영
+
+autonumber
+hide footbox
+skinparam responseMessageBelowArrow true
+skinparam sequenceMessageAlign center
+
+participant "시동 상태 제공" as Ign
+participant "ChildLock SW" as SW
+participant "HMI/클러스터" as HMI
+database "Logger" as LOG
+
+== IGN OFF 이벤트 발생 ==
+
+Ign -> SW : IgnitionState = OFF
+
+note right
+  종료 시퀀스 개입
+  IGN OFF 감지 즉시
+  상태 조회 우선 수행
+end note
+
+SW -> SW : ChildLockState 조회
+
+alt ChildLockState == ON
+    SW -> HMI : 상태 요약 메시지 표시 (1회)\n차일드락이 켜져 있습니다
+    SW -> LOG : 상태 알림 이벤트 기록
+else ChildLockState == OFF
+    SW -> LOG : 알림 생략 기록
+end
+
+== 위험 시나리오 B : 과도 경고 / 메시지 충돌 ==
+
+opt 다른 위험 경고 존재 (예: BSD)
+    SW -> SW : HMI 우선순위 제어 알고리즘 적용
+    SW -> HMI : 타 위험 경고 우선 표시
+    SW -> LOG : 우선순위 제어 적용 기록
+end
+
+opt 알림 반복 가능성
+    SW -> SW : 알림 1회/시간 제한 로직 적용
+    SW -> LOG : 반복 제한 로직 기록
+end
+
+== 위험 시나리오 C : 전원 종료 직전 알림 누락 방지 ==
+
+opt 전원 종료 임박
+    SW -> HMI : 최소 1회 상태 표시 보장
+    SW -> LOG : 종료 전 표시 수행 기록
+end
+
+@enduml

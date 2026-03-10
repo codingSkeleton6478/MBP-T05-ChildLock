@@ -1,0 +1,52 @@
+@startuml
+title SD-6 (UC-6) 뒷좌석 점유 + 출발 시 상태/권장 알림 - 예외 반영
+
+participant "차량 출발 상태" as Start
+participant "뒷좌석 점유 센서" as Sensor
+participant "ChildLock SW" as SW
+participant "HMI/클러스터" as HMI
+database Logger
+
+== 기본 흐름 ==
+
+Start -> SW : 출발 상태 진입
+Sensor -> SW : RearSeatOccupancy(TRUE/FALSE)
+
+SW -> SW : ChildLockState 조회
+
+alt 점유 TRUE and CL == OFF
+    SW -> HMI : 권장 알림 표시 (1회)\n"뒷좌석 점유 감지\n차일드락을 켜세요"
+    SW -> Logger : 권장 알림 이벤트 기록
+
+else 점유 TRUE and CL == ON
+    SW -> HMI : 상태 알림 표시 (1회)\n"차일드락 ON"
+    SW -> Logger : 상태 알림 이벤트 기록
+
+else 점유 FALSE
+    SW -> HMI : 상태 알림 생략\n또는 요약 표시
+    SW -> Logger : 점유 없음 상태 기록
+end
+
+== Exception 1 : 1초 이내 알림 요구조건 ==
+
+opt 출발 이벤트 후 1초 이내
+    SW -> HMI : 알림 출력 보장
+end
+
+== Exception 2 : HMI Watchdog 적용 ==
+
+opt HMI 응답 지연
+    SW -> HMI : 경고음 채널 병행 출력
+    SW -> Logger : HMI Watchdog 이벤트 기록
+end
+
+== Exception 3 : 전원 리셋 ==
+
+opt IGN 리셋 발생
+    SW -> Sensor : 점유 상태 재확인 요청
+    Sensor --> SW : 현재 점유 상태 반환
+    SW -> SW : 상태 즉시 재반영
+    SW -> Logger : 리셋 후 재확인 로그 기록
+end
+
+@enduml
