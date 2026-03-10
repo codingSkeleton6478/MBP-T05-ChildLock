@@ -11,10 +11,12 @@
  *            - Handle null pointers safely.
  *          Achieves high Statement, Branch and MC/DC coverage.
  *
- * @version 1.1.0
+ * @version 1.2.0
  * @date    2026-03-11
  * @author  AI Model: Gemini 3.5 Pro (review & fix)
  * @copyright Synetics 20 CopyrightⓒSynetics_
+ * @note    v1.2.0: Added EXPECT_TRUE(eventLog) assertions for risk-HIGH and
+ *          sensor-fault branches per SDD Table F-08 Output spec.
  * @note    v1.1.0: Updated SensorFault test to expect warningSound=true
  *          per corrected SAFE_LOCKED HMI alert policy.
  */
@@ -66,6 +68,7 @@ TEST_F(F08RearRiskProtectionTest, HighRisk_CLWasOff_AutoActivate) {
     EXPECT_TRUE(output.clChanged);
     EXPECT_EQ(output.warningMsgId, WARNING_MSG_REAR_RISK_HIGH);
     EXPECT_TRUE(output.warningSound);
+    EXPECT_TRUE(output.eventLog);  /* SD-5: "자동 보호 이벤트 로그 기록" must be set */
 }
 
 TEST_F(F08RearRiskProtectionTest, HighRisk_CLWasOn_MaintainLock) {
@@ -78,6 +81,7 @@ TEST_F(F08RearRiskProtectionTest, HighRisk_CLWasOn_MaintainLock) {
     EXPECT_FALSE(output.clChanged);
     EXPECT_EQ(output.warningMsgId, WARNING_MSG_CL_ALREADY_ON);
     EXPECT_TRUE(output.warningSound);
+    EXPECT_TRUE(output.eventLog);  /* risk-HIGH always logs */
 }
 
 TEST_F(F08RearRiskProtectionTest, NoRisk_CLOff_RemainOff) {
@@ -90,6 +94,7 @@ TEST_F(F08RearRiskProtectionTest, NoRisk_CLOff_RemainOff) {
     EXPECT_FALSE(output.clChanged);
     EXPECT_EQ(output.warningMsgId, WARNING_MSG_NONE);
     EXPECT_FALSE(output.warningSound);
+    EXPECT_FALSE(output.eventLog); /* No risk, no log */
 }
 
 /* =========================================================================
@@ -107,6 +112,7 @@ TEST_F(F08RearRiskProtectionTest, SensorFault_InvalidRisk_ForceSafeState) {
     EXPECT_EQ(output.warningMsgId, WARNING_MSG_SENSOR_FAULT);
     /* v1.1.0 Fix: warningSound MUST be true on fault (SAFE_LOCKED policy) */
     EXPECT_TRUE(output.warningSound);
+    EXPECT_TRUE(output.eventLog);  /* FG-02: "로그/DTC 저장" must be set on fault */
 }
 
 TEST_F(F08RearRiskProtectionTest, SensorFault_CLWasAlreadyOn) {

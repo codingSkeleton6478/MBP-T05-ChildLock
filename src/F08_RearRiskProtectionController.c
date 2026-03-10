@@ -6,7 +6,7 @@
  *          Forces Child Lock to ON if high risk is reported.
  *          Implements the SAFE_LOCKED fallback policy for sensor faults.
  *
- * @version 1.1.0
+ * @version 1.2.0
  * @date    2026-03-11
  * @author  AI Model: Gemini 3.5 Pro (review & fix)
  * @copyright Synetics 20 CopyrightⓒSynetics_
@@ -15,6 +15,10 @@
  * @asil    ASIL B
  * @traceability DD-CL-F08, UC-5
  *
+ * @note v1.2.0: Added eventLog=true in sensor-fault and risk-HIGH branches
+ *              per SDD Table 3.2 F-08 Output spec, FG-02 flowchart
+ *              ('로그/DTC 저장'), and SD-5 sequence diagram
+ *              ('자동 보호 이벤트 로그 기록').
  * @note v1.1.0: Fixed warningSound=false->true on sensor fault path
  *              per SDD 5.2.3 SAFE_LOCKED policy (HMI alert mandatory).
  * @note Function length <= 80 lines. Cyclomatic Complexity <= 10.
@@ -36,11 +40,12 @@ static void initNeutralOutput(
     const ChildLockState_t       currentCLState,
     RearRiskProtectionOutput_t * const output)
 {
-    /* By default, we request no state change and no warnings */
+    /* By default, we request no state change, no warnings, no log */
     output->targetCLState = currentCLState;
     output->warningMsgId  = WARNING_MSG_NONE;
     output->warningSound  = false;
     output->clChanged     = false;
+    output->eventLog      = false; /* No loggable event until a branch sets it */
 }
 
 /* =========================================================================
@@ -80,7 +85,8 @@ void F08_RearRiskProtectionController_Run(
          * to ensure the driver is always informed of abnormal state. */
         output->targetCLState = CL_STATE_ON;
         output->warningMsgId  = WARNING_MSG_SENSOR_FAULT;
-        output->warningSound  = true; /* Mandatory: driver must be alerted on fault */
+        output->warningSound  = true;  /* Mandatory: driver must be alerted on fault */
+        output->eventLog      = true;  /* FG-02: "로그/DTC 저장" on Sensor Fault path */
 
         if (input->currentCLState == CL_STATE_OFF)
         {
@@ -93,7 +99,8 @@ void F08_RearRiskProtectionController_Run(
     if (input->riskHigh)
     {
         output->targetCLState = CL_STATE_ON;
-        output->warningSound  = true; /* Audible beep for imminent physical danger */
+        output->warningSound  = true;  /* Audible beep for imminent physical danger */
+        output->eventLog      = true;  /* SD-5: "자동 보호 이벤트 로그 기록" */
 
         /* Did we actively intervene, or was it already locked? */
         if (input->currentCLState == CL_STATE_OFF)

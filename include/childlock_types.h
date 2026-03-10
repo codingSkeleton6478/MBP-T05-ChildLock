@@ -6,15 +6,17 @@
  *          used across the Child Lock software modules (F-01 ~ F-10).
  *          No dynamic memory allocation. All types are fixed-size for embedded use.
  *
- * @version 1.0.0
+ * @version 1.1.0
  * @date    2026-03-11
- * @author  AI Model: Gemini 3.5 Pro
+ * @author  AI Model: Gemini 3.5 Pro (review & fix)
  * @copyright Synetics 20 CopyrightⓒSynetics_
  *
  * @req_id  REQ-SW-CL-000
  * @asil    ASIL B (used by safety-critical modules)
  * @traceability DD-CL-000
  *
+ * @note    v1.1.0: Added eventLog field to RearRiskProtectionOutput_t
+ *          per SDD Table 3.2 F-08 Output spec and FG-02/SD-5 diagrams.
  * @note    Complies with MISRA C:2012. No use of dynamic memory.
  * @note    ISO 26262 Part 6 - Software-level requirements.
  */
@@ -192,6 +194,13 @@ typedef struct
  * @brief Output data structure for F-08 RearRiskProtectionController.
  * @req_id REQ-SW-ESA-002
  * @asil   ASIL B
+ *
+ * @note   eventLog field added in v1.1.0 to align with SDD Table 3.2 (F-08 Output)
+ *         and FG-02 flowchart / SD-5 sequence diagram which mandate:
+ *           - "자동 보호 이벤트 로그 기록" on risk-HIGH branch
+ *           - "로그/DTC 저장" on sensor-fault branch
+ *         The caller (F-06 HmiAndEventLogger) uses this flag to know
+ *         whether a loggable event occurred this cycle.
  */
 typedef struct
 {
@@ -199,6 +208,8 @@ typedef struct
     WarningMsgId_t   warningMsgId;    /**< HMI warning message identifier.                */
     bool             warningSound;    /**< true = trigger audible warning sound.           */
     bool             clChanged;       /**< true = CL state was changed by this function.  */
+    bool             eventLog;        /**< true = a loggable protection event occurred
+                                           (caller should record to EventLog/DTC store).  */
 } RearRiskProtectionOutput_t;
 
 #endif /* CHILDLOCK_TYPES_H */
