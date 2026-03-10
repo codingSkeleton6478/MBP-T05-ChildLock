@@ -1,0 +1,119 @@
+@startuml
+title FG-01 Door Lock / Unlock Control
+
+start
+:입력 수집;
+note right
+  - SwitchInput
+  - VehicleSpeed
+  - CrashSignal
+  - RearDoorInnerHandleEvent
+  - CurrentCLState
+end note
+
+if (CrashSignal 유효?) then (Yes)
+  :TargetCLState = OFF;
+  :Reason = EmergencyUnlock;
+  :Door ECU에게 OFF 명령 전송;
+  if (ACK 수신?) then (Yes)
+    :비상 해제 표시;
+    :이벤트 로그 기록;
+    stop
+  else (No)
+    :최대 N회 재전송;
+    if (재전송 성공?) then (Yes)
+      :비상 해제 표시;
+      :이벤트 로그 기록;
+      stop
+    else (No)
+      :Critical DTC 저장;
+      :Emergency flag 유지;
+      stop
+    endif
+  endif
+else (No)
+  if (VehicleSpeed 유효?) then (No)
+    :SAFE_LOCKED 진입;
+    :CL ON 유지;
+    :속도 신호 오류 표시;
+    :로그/DTC 저장;
+    stop
+  else (Yes)
+    if (SwitchInput 이벤트 존재?) then (Yes)
+      if (Request == OFF?) then (Yes)
+        if (VehicleSpeed <= 3km/h?) then (Yes)
+          :TargetCLState = OFF;
+        else (No)
+          :해제 요청 차단;
+          :"주행 중 해제 불가" 표시;
+          :차단 로그 저장;
+          stop
+        endif
+      else (No)
+        :TargetCLState = ON;
+      endif
+      
+      :Door ECU 명령 전송;
+      if (ACK 수신?) then (Yes)
+        :상태 갱신;
+        :HMI 표시;
+        :이벤트 로그 기록;
+        stop
+      else (No)
+        :최대 N회 재전송;
+        if (재전송 성공?) then (Yes)
+          :상태 갱신;
+          :HMI 표시;
+          :이벤트 로그 기록;
+          stop
+        else (No)
+          :이전 상태 유지;
+          :통신 오류 표시;
+          :DTC 저장;
+          stop
+        endif
+      endif
+    else (No)
+      if (VehicleSpeed > AutoLockThreshold?) then (Yes)
+        :TargetCLState = ON;
+        :사고 잠금 수행;
+        :Door ECU 명령 전송;
+        if (ACK 수신?) then (Yes)
+          :상태 갱신;
+          :HMI 표시;
+          :이벤트 로그 기록;
+          stop
+        else (No)
+          :최대 N회 재전송;
+          if (재전송 성공?) then (Yes)
+            :상태 갱신;
+            :HMI 표시;
+            :이벤트 로그 기록;
+            stop
+          else (No)
+            :이전 상태 유지;
+            :통신 오류 표시;
+            :DTC 저장;
+            stop
+          endif
+        endif
+      else (No)
+        if (RearDoorInnerHandleEvent 존재?) then (Yes)
+          if (CurrentCLState == ON?) then (Yes)
+            :내부 개방 차단;
+            :필요 시 운전자 알림;
+            :차단 로그 기록;
+            stop
+          else (No)
+            :개방 허용;
+            :개방 로그 기록;
+            stop
+          endif
+        else (No)
+          stop
+        endif
+      endif
+    endif
+  endif
+endif
+@enduml

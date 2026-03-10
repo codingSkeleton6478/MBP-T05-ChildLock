@@ -1,0 +1,72 @@
+@startuml
+title FG-02 Exit Safety Assist
+
+start
+:입력 수집;
+note right
+  - RearSensor
+  - RearSeatOccupancy
+  - IgnitionState
+  - DepartureEvent
+  - CurrentCLState
+  - HMIState
+end note
+
+if (Rear sensor valid?) then (No)
+  :SAFE_LOCKED 진입;
+  :CL ON 유지;
+  :"후방 센서 오류" 표시;
+  :로그/DTC 저장;
+  stop
+else (Yes)
+  if (RiskHigh?\n(거리 + 상대속도 + 지속시간)) then (Yes)
+    if (CurrentCLState == OFF?) then (Yes)
+      :TargetCLState = ON;
+      :Door ECU 명령 전송;
+    else (No)
+      :현재 CL ON 유지;
+    endif
+    :운전자 경고음/메시지 출력;
+    :자동 보호 이벤트 로그;
+    stop
+  else (No)
+    if (DepartureEvent 발생?) then (Yes)
+      if (RearSeatOccupancy == TRUE?) then (No)
+        :상태 알림 생략\n또는 요약 메시지 표시;
+        :로그 기록;
+        stop
+      else (Yes)
+        if (CurrentCLState == OFF?) then (Yes)
+          :권장 알림 1회 표시 -> "차일드락을 켜세요";
+          :권장 알림 로그 기록;
+          stop
+        else (No)
+          :"차일드락 ON" 상태 알림 1회;
+          :상태 알림 로그 기록;
+          stop
+        endif
+      endif
+    else (No)
+      if (IgnitionOffEvent 발생?) then (No)
+        stop
+      else (Yes)
+        if (CurrentCLState == ON?) then (No)
+          :알림 생략 로그;
+          stop
+        else (Yes)
+          if (HighPriorityHMIAlert 존재?) then (Yes)
+            :HMI 우선순위 제어;
+            :상위 경고 우선;
+            :이벤트 로그 기록;
+            stop
+          else (No)
+            :시동 OFF 상태 요약 메시지 1회 표시;
+            :상태 알림 로그 기록;
+            stop
+          endif
+        endif
+      endif
+    endif
+  endif
+endif
+@enduml
