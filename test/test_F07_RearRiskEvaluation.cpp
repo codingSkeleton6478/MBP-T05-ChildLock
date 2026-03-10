@@ -8,8 +8,9 @@
  *          Achieves high Statement, Branch and MC/DC coverage.
  *
  * @version 1.0.0
- * @date    2026-03-10
- * @author  MBP-T05 Team
+ * @date    2026-03-11
+ * @author  AI Model: Gemini 3.5 Pro
+ * @copyright Synetics 20 CopyrightⓒSynetics_
  */
 
 #include <gtest/gtest.h>

@@ -16,8 +16,9 @@
  *          FAULT_FLAG_REAR_SENSOR is set (Safe State = SAFE_LOCKED per SDD 5.2.3).
  *
  * @version 1.0.0
- * @date    2026-03-10
- * @author  MBP-T05 Team (AI-assisted: Gemini 2.5 Pro)
+ * @date    2026-03-11
+ * @author  AI Model: Gemini 3.5 Pro
+ * @copyright Synetics 20 CopyrightⓒSynetics_
  *
  * @req_id      REQ-SW-ESA-001
  * @asil        ASIL B
