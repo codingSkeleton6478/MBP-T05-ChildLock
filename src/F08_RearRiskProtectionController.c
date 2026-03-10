@@ -7,8 +7,9 @@
  *          Implements the SAFE_LOCKED fallback policy for sensor faults.
  *
  * @version 1.2.0
- * @date    2026-03-11
- * @author  AI Model: Gemini 3.5 Pro (review & fix)
+ * @date    2026-03-11 01:42 (KST)
+ * @author  AI Model (v1.0.0): Gemini 3.5 Pro — Initial implementation
+ * @author  AI Model (v1.1.0~1.2.0): Claude Sonnet 4.6 (Thinking) — Review & fix
  * @copyright Synetics 20 CopyrightⓒSynetics_
  *
  * @req_id  REQ-SW-ESA-002
