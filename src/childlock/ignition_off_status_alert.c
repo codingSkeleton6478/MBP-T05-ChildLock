@@ -90,7 +90,30 @@ static void IgnitionOffStatusAlert_IssueAlert(IgnitionOffStatusAlert_Output_t *o
 }
 
 /**
+ * @brief Issues an alert and latches the alert-once policy state.
+ *
+ * @param[in,out] alert Runtime context to update.
+ * @param[out] output Output structure to update.
+ * @param[in] message Message selected for the alert.
+ */
+static void IgnitionOffStatusAlert_IssueLatchedAlert(IgnitionOffStatusAlert_t *alert,
+                                                     IgnitionOffStatusAlert_Output_t *output,
+                                                     IgnitionOffStatusAlert_Message_t message)
+{
+    if (alert != NULL)
+    {
+        IgnitionOffStatusAlert_IssueAlert(output, message);
+        alert->alertAlreadyIssued = true;
+    }
+}
+
+/**
  * @brief Initializes the F-10 context and resets alert-once state.
+ *
+ * @details Initialization is intentionally strict so later event handling does
+ *          not need to protect against missing query dependencies. The alert
+ *          latch is also reset here to keep repeated tests and startup paths
+ *          deterministic.
  *
  * @param[out] alert Pointer to the runtime context.
  * @param[in] config Pointer to the dependency configuration.
@@ -128,7 +151,10 @@ bool IgnitionOffStatusAlert_Init(IgnitionOffStatusAlert_t *alert,
  * @details This minimal implementation is intentionally state-driven. It only
  *          emits an alert on IGN OFF when the current child lock state is ON,
  *          or when state retrieval fails and a fallback is required. Once an
- *          alert is emitted, repeated IGN OFF handling is suppressed.
+ *          alert is emitted, repeated IGN OFF handling is suppressed. The
+ *          `activeHmiAlert` and `hmiHealthy` inputs are carried in the API for
+ *          future HMI arbitration work, but they are not part of the current
+ *          test-driven behavior.
  *
  * @param[in] alert Pointer to the initialized runtime context.
  * @param[in] input Pointer to the current IGN OFF handling inputs.
@@ -160,17 +186,17 @@ bool IgnitionOffStatusAlert_HandleEvent(IgnitionOffStatusAlert_t *alert,
             if ((querySucceeded == false)
                 || (IgnitionOffStatusAlert_IsValidState(currentState) == false))
             {
-                IgnitionOffStatusAlert_IssueAlert(
+                IgnitionOffStatusAlert_IssueLatchedAlert(
+                    alert,
                     output,
                     IOA_STATUS_MESSAGE_QUERY_FALLBACK);
-                alert->alertAlreadyIssued = true;
             }
             else if (currentState == CL_STATE_ON)
             {
-                IgnitionOffStatusAlert_IssueAlert(
+                IgnitionOffStatusAlert_IssueLatchedAlert(
+                    alert,
                     output,
                     IOA_STATUS_MESSAGE_CL_ON_SUMMARY);
-                alert->alertAlreadyIssued = true;
             }
             else
             {

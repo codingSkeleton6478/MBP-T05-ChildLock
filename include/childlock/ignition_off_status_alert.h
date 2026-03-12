@@ -116,6 +116,10 @@ typedef struct
 /**
  * @brief Initializes the F-10 context and resets alert-once state.
  *
+ * @details Initialization succeeds only when the child lock state query
+ *          callback is available. The alert-once latch is reset here so each
+ *          new runtime context starts from a known, repeatable state.
+ *
  * @param[out] alert Pointer to the runtime context.
  * @param[in] config Pointer to the dependency configuration.
  * @return true if initialization succeeded, otherwise false.
@@ -129,6 +133,12 @@ bool IgnitionOffStatusAlert_Init(IgnitionOffStatusAlert_t *alert,
 
 /**
  * @brief Handles IGN OFF status alert generation for UC-7.
+ *
+ * @details The handler evaluates the current child lock state only when an
+ *          IGN OFF event is present and the alert-once latch has not already
+ *          been set. A summary alert is issued for child lock ON, a fallback
+ *          alert is issued when state retrieval fails, and no alert is emitted
+ *          for child lock OFF.
  *
  * @param[in] alert Pointer to the initialized runtime context.
  * @param[in] input Pointer to the current IGN OFF handling inputs.
