@@ -56,6 +56,14 @@ target_include_directories(StatePersistenceManager
     PUBLIC ${CMAKE_SOURCE_DIR}/include
 )
 
+# F-10: Ignition Off Status Alert (C)
+add_library(IgnitionOffStatusAlert
+    src/childlock/ignition_off_status_alert.c
+)
+target_include_directories(IgnitionOffStatusAlert
+    PUBLIC ${CMAKE_SOURCE_DIR}/include
+)
+
 # Child Lock State Decision (C++)
 add_library(child_lock_state_decision
     src/child_lock_state_decision.cpp

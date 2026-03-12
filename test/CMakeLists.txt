@@ -37,6 +37,15 @@ target_link_libraries(test_state_persistence_manager
 )
 gtest_discover_tests(test_state_persistence_manager)
 
+# F-10 Unit Test
+add_executable(test_ignition_off_status_alert
+    test_ignition_off_status_alert.cpp
+)
+target_link_libraries(test_ignition_off_status_alert
+    PRIVATE IgnitionOffStatusAlert gtest_main
+)
+gtest_discover_tests(test_ignition_off_status_alert)
+
 # Child Lock State Decision Unit Test (custom runner, no GoogleTest)
 add_executable(child_lock_state_decision_test
     child_lock_state_decision_test.cpp
