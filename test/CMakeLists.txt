@@ -26,3 +26,23 @@ add_executable(test_F08_RearRiskProtection
 )
 target_link_libraries(test_F08_RearRiskProtection gtest_main)
 gtest_discover_tests(test_F08_RearRiskProtection)
+# Gather source files (excluding main, since we'll test individual units)
+# For now, we only have F07, but we can make it extensible
+set(TEST_SRC_FILES
+    ${CMAKE_SOURCE_DIR}/src/F07_RearRiskEvaluation.c
+)
+
+# F-07 Unit Test Target
+add_executable(test_F07_RearRiskEvaluation
+    test_F07_RearRiskEvaluation.cpp
+    ${TEST_SRC_FILES}
+)
+
+# Link against Google Test
+target_link_libraries(test_F07_RearRiskEvaluation
+    gtest_main
+)
+
+# Register tests
+include(GoogleTest)
+gtest_discover_tests(test_F07_RearRiskEvaluation)
