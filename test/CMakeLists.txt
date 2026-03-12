@@ -28,6 +28,15 @@ target_link_libraries(test_F08_RearRiskProtection
 )
 gtest_discover_tests(test_F08_RearRiskProtection)
 
+# F-05 Unit Test
+add_executable(test_state_persistence_manager
+    test_state_persistence_manager.cpp
+)
+target_link_libraries(test_state_persistence_manager
+    PRIVATE StatePersistenceManager gtest_main
+)
+gtest_discover_tests(test_state_persistence_manager)
+
 # Child Lock State Decision Unit Test (custom runner, no GoogleTest)
 add_executable(child_lock_state_decision_test
     child_lock_state_decision_test.cpp

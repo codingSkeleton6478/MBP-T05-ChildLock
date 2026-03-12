@@ -48,6 +48,14 @@ target_include_directories(F08_RearRiskProtectionController
     PUBLIC ${CMAKE_SOURCE_DIR}/include
 )
 
+# F-05: State Persistence Manager (C)
+add_library(StatePersistenceManager
+    src/childlock/state_persistence_manager.c
+)
+target_include_directories(StatePersistenceManager
+    PUBLIC ${CMAKE_SOURCE_DIR}/include
+)
+
 # Child Lock State Decision (C++)
 add_library(child_lock_state_decision
     src/child_lock_state_decision.cpp
