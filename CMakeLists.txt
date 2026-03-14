@@ -32,6 +32,14 @@ if(ENABLE_COVERAGE)
     add_link_options(--coverage)
 endif()
 
+# F-01: Input Monitor and Validator (C)
+add_library(F01_InputMonitorAndValidator
+    src/F01_InputMonitorAndValidator.c
+)
+target_include_directories(F01_InputMonitorAndValidator
+    PUBLIC ${CMAKE_SOURCE_DIR}/include
+)
+
 # F-07: Rear Risk Evaluation (C)
 add_library(F07_RearRiskEvaluation
     src/F07_RearRiskEvaluation.c

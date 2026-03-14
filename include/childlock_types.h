@@ -48,6 +48,9 @@
 /** @brief Speed signal validity timeout in milliseconds. */
 #define SPEED_SIGNAL_TIMEOUT_MS        (500U)
 
+/** @brief Maximum physically valid vehicle speed (km/h). Values above are rejected as sensor fault. @req_id REQ-SW-CL-001 */
+#define SPEED_MAX_VALID_KMH            (250.0f)
+
 /* =========================================================================
  * Section 2: Rear Risk Evaluation Constants (F-07)
  * ========================================================================= */
@@ -147,6 +150,32 @@ typedef enum
     FAULT_FLAG_NVM_FAULT     = 0x10U  /**< NVM read/write error.             */
 } FaultFlag_t;
 
+/**
+ * @brief Raw switch request from the driver's child lock control button.
+ * @note  Debouncing is handled upstream (hardware or input conditioning layer).
+ *        F-01 treats this as a pre-debounced signal.
+ * @req_id REQ-SW-CL-001
+ * @traceability DD-CL-F01, UC-1
+ */
+typedef enum
+{
+    SWITCH_REQUEST_NONE = 0U, /**< No switch event pending.         */
+    SWITCH_REQUEST_ON   = 1U, /**< Driver requests Child Lock ON.   */
+    SWITCH_REQUEST_OFF  = 2U  /**< Driver requests Child Lock OFF.  */
+} SwitchRequest_t;
+
+/**
+ * @brief Event flag bitmask for discrete events detected by F-01.
+ * @note  Multiple flags can be OR-combined.
+ * @req_id REQ-SW-CL-004
+ * @traceability DD-CL-F01, UC-4
+ */
+typedef enum
+{
+    EVENT_FLAG_NONE             = 0x00U, /**< No events detected.                         */
+    EVENT_FLAG_REAR_DOOR_HANDLE = 0x01U  /**< Rear door inner handle pull event detected. */
+} EventFlag_t;
+
 /* =========================================================================
  * Section 4: Shared Data Structures
  * ========================================================================= */
@@ -212,5 +241,46 @@ typedef struct
     bool             eventLog;        /**< true = a loggable protection event occurred
                                            (caller should record to EventLog/DTC store).  */
 } RearRiskProtectionOutput_t;
+
+/* =========================================================================
+ * Section 5: F-01 InputMonitorAndValidator Data Structures
+ * ========================================================================= */
+
+/**
+ * @brief Raw input data collected by F-01 InputMonitorAndValidator each cycle.
+ * @req_id  REQ-SW-CL-001, REQ-SW-CL-002
+ * @asil    ASIL B
+ * @traceability DD-CL-F01
+ */
+typedef struct
+{
+    SwitchRequest_t switchRequest;             /**< Pre-debounced driver switch request.              */
+    float           vehicleSpeedKmh;           /**< Raw vehicle speed (km/h). Range: 0 ~ 250.        */
+    uint32_t        speedTimestampMs;          /**< Timestamp of last speed signal update (ms).       */
+    uint32_t        currentTimestampMs;        /**< Current system timestamp (ms) for timeout check.  */
+    bool            crashSignalActive;         /**< true = crash/collision signal is currently active. */
+    bool            crashSignalValid;          /**< true = crash signal source is trustworthy.        */
+    bool            rearDoorInnerHandleActive; /**< true = rear door inner handle pulled.             */
+    IgnitionState_t ignitionState;             /**< Current ignition/power state.                     */
+} F01_RawInput_t;
+
+/**
+ * @brief Validated output data produced by F-01 InputMonitorAndValidator.
+ * @details Contains validated signals, computed conditions, event flags,
+ *          and fault flags for downstream consumption by F-02.
+ * @req_id  REQ-SW-CL-001, REQ-SW-CL-002
+ * @asil    ASIL B
+ * @traceability DD-CL-F01
+ */
+typedef struct
+{
+    SwitchRequest_t validSwitchInput;    /**< Validated driver switch request (passed through). */
+    float           validSpeedKmh;       /**< Validated speed (km/h). 0.0f if speed invalid.   */
+    bool            speedValid;          /**< true = speed signal passed range+timeout checks.  */
+    bool            validCrashSignal;    /**< true = valid crash detected (triggers emergency). */
+    bool            autoLockConditionMet;/**< true = speed > threshold, auto-lock eligible.     */
+    EventFlag_t     eventFlags;          /**< Bitmask of discrete events detected this cycle.   */
+    FaultFlag_t     faultFlags;          /**< Bitmask of faults detected this cycle.            */
+} F01_ValidatedOutput_t;
 
 #endif /* CHILDLOCK_TYPES_H */

@@ -10,6 +10,15 @@ FetchContent_MakeAvailable(googletest)
 
 include(GoogleTest)
 
+# F-01 Unit Test
+add_executable(test_F01_InputMonitorAndValidator
+    test_F01_InputMonitorAndValidator.cpp
+)
+target_link_libraries(test_F01_InputMonitorAndValidator
+    PRIVATE F01_InputMonitorAndValidator gtest_main
+)
+gtest_discover_tests(test_F01_InputMonitorAndValidator)
+
 # F-07 Unit Test
 add_executable(test_F07_RearRiskEvaluation
     test_F07_RearRiskEvaluation.cpp
