@@ -55,6 +55,15 @@ target_link_libraries(test_ignition_off_status_alert
 )
 gtest_discover_tests(test_ignition_off_status_alert)
 
+# F-03 Unit Test
+add_executable(test_door_ecu_command_handler
+    test_door_ecu_command_handler.cpp
+)
+target_link_libraries(test_door_ecu_command_handler
+    PRIVATE DoorEcuCommandHandler gtest_main
+)
+gtest_discover_tests(test_door_ecu_command_handler)
+
 # F-04 Unit Test
 add_executable(test_rear_door_open_block_handler
     test_rear_door_open_block_handler.cpp
