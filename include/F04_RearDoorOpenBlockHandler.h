@@ -1,5 +1,5 @@
 /**
- * @file rear_door_open_block_handler.h
+ * @file F04_RearDoorOpenBlockHandler.h
  * @brief Public API for F-04 RearDoorOpenBlockHandler.
  *
  * @details This module handles UC-4 behavior. When a rear inner-handle open
@@ -13,8 +13,8 @@
  * @note Related UC: UC-4
  */
 
-#ifndef CHILDLOCK_REAR_DOOR_OPEN_BLOCK_HANDLER_H
-#define CHILDLOCK_REAR_DOOR_OPEN_BLOCK_HANDLER_H
+#ifndef F04_REAR_DOOR_OPEN_BLOCK_HANDLER_H
+#define F04_REAR_DOOR_OPEN_BLOCK_HANDLER_H
 
 #include <stdbool.h>
 
@@ -119,4 +119,4 @@ bool RearDoorOpenBlockHandler_HandleEvent(
     const RearDoorOpenBlockHandler_Input_t *input,
     RearDoorOpenBlockHandler_Output_t *output);
 
-#endif /* CHILDLOCK_REAR_DOOR_OPEN_BLOCK_HANDLER_H */
+#endif /* F04_REAR_DOOR_OPEN_BLOCK_HANDLER_H */

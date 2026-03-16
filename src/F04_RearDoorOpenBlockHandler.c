@@ -1,5 +1,5 @@
 /**
- * @file rear_door_open_block_handler.c
+ * @file F04_RearDoorOpenBlockHandler.c
  * @brief Minimal C11 implementation for F-04 RearDoorOpenBlockHandler.
  *
  * @details The implementation applies UC-4 blocking behavior using only the
@@ -12,7 +12,7 @@
  * @note Related UC: UC-4
  */
 
-#include "childlock/rear_door_open_block_handler.h"
+#include "F04_RearDoorOpenBlockHandler.h"
 
 #include <stddef.h>
 
@@ -59,6 +59,7 @@ static bool RearDoorOpenBlockHandler_IsValidState(ChildLockState_t state)
  * @asil ASIL-TBD
  * @note Related UC: UC-4
  */
+// cppcheck-suppress unusedFunction
 bool RearDoorOpenBlockHandler_HandleEvent(
     const RearDoorOpenBlockHandler_Input_t *input,
     RearDoorOpenBlockHandler_Output_t *output)
@@ -98,7 +99,7 @@ bool RearDoorOpenBlockHandler_HandleEvent(
                 }
                 else
                 {
-                    /* CLOSED/UNKNOWN feedback keeps blocked result for now. */
+                    /* CLOSED/UNKNOWN feedback keeps blocked result. */
                 }
             }
         }

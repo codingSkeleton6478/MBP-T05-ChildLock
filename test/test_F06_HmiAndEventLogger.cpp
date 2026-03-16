@@ -159,6 +159,77 @@ TEST_F(F06HmiLoggerTest, Robustness_ProcessUninitializedOrNull)
 
     // Null pointer
     F06_HmiAndEventLogger_Process(NULL, WARNING_MSG_CL_ALREADY_ON, true, F06_EVENT_TYPE_ERROR, FAULT_FLAG_HMI_FAULT, CL_STATE_OFF);
-    
+
     EXPECT_EQ(0U, g_backend.displayCallCount);
+}
+
+/* =========================================================================
+ * 4. Init failure variants
+ * ========================================================================= */
+
+TEST_F(F06HmiLoggerTest, Init_NullCtx_ReturnsFalse)
+{
+    const bool success = F06_HmiAndEventLogger_Init(nullptr, &config);
+    EXPECT_FALSE(success);
+}
+
+TEST_F(F06HmiLoggerTest, Init_NullConfig_ReturnsFalse)
+{
+    F06_HmiLoggerContext_t c;
+    const bool success = F06_HmiAndEventLogger_Init(&c, nullptr);
+    EXPECT_FALSE(success);
+    EXPECT_FALSE(c.isInitialized);
+}
+
+TEST_F(F06HmiLoggerTest, Init_NullDisplayCb_ReturnsFalse)
+{
+    F06_HmiLoggerContext_t c;
+    F06_HmiLoggerConfig_t badConfig = config;
+    badConfig.displayCb = nullptr;
+
+    EXPECT_FALSE(F06_HmiAndEventLogger_Init(&c, &badConfig));
+    EXPECT_FALSE(c.isInitialized);
+}
+
+TEST_F(F06HmiLoggerTest, Init_NullDtcCb_ReturnsFalse)
+{
+    F06_HmiLoggerContext_t c;
+    F06_HmiLoggerConfig_t badConfig = config;
+    badConfig.dtcCb = nullptr;
+
+    EXPECT_FALSE(F06_HmiAndEventLogger_Init(&c, &badConfig));
+    EXPECT_FALSE(c.isInitialized);
+}
+
+/* =========================================================================
+ * 5. Process edge cases
+ * ========================================================================= */
+
+TEST_F(F06HmiLoggerTest, Process_AllNone_NoCallbacksCalled)
+{
+    F06_HmiAndEventLogger_Process(&ctx,
+                                  WARNING_MSG_NONE,
+                                  false,
+                                  F06_EVENT_TYPE_NONE,
+                                  FAULT_FLAG_NONE,
+                                  CL_STATE_OFF);
+
+    EXPECT_EQ(0U, g_backend.displayCallCount);
+    EXPECT_EQ(0U, g_backend.logCallCount);
+    EXPECT_EQ(0U, g_backend.dtcCallCount);
+}
+
+TEST_F(F06HmiLoggerTest, Process_OnlyFaultSet_OnlyDtcCalled)
+{
+    F06_HmiAndEventLogger_Process(&ctx,
+                                  WARNING_MSG_NONE,
+                                  false,
+                                  F06_EVENT_TYPE_NONE,
+                                  FAULT_FLAG_SPEED_FAULT,
+                                  CL_STATE_OFF);
+
+    EXPECT_EQ(0U, g_backend.displayCallCount);
+    EXPECT_EQ(0U, g_backend.logCallCount);
+    EXPECT_EQ(1U, g_backend.dtcCallCount);
+    EXPECT_EQ(FAULT_FLAG_SPEED_FAULT, g_backend.lastFault);
 }

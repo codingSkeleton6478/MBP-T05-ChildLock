@@ -1,5 +1,5 @@
 /**
- * @file state_persistence_manager.c
+ * @file F05_StatePersistenceManager.c
  * @brief Minimal C11 implementation for F-05 StatePersistenceManager.
  *
  * @details The implementation persists the current child lock state during
@@ -12,7 +12,7 @@
  * @note Related UC: UC-1, UC-3, UC-7
  */
 
-#include "childlock/state_persistence_manager.h"
+#include "F05_StatePersistenceManager.h"
 
 #include <stddef.h>
 
@@ -84,8 +84,7 @@ static bool StatePersistenceManager_IsReady(const StatePersistenceManager_t *man
  * @brief Initializes the F-05 context with dependency callbacks.
  *
  * @details Initialization is intentionally strict: all callbacks must be
- *          available before the context is marked initialized. This prevents
- *          partially configured persistence or restore behavior later.
+ *          available before the context is marked initialized.
  *
  * @param[out] manager Pointer to the runtime context.
  * @param[in] config Pointer to the dependency configuration.
@@ -95,6 +94,7 @@ static bool StatePersistenceManager_IsReady(const StatePersistenceManager_t *man
  * @asil ASIL-TBD
  * @note Related UC: UC-1, UC-3, UC-7
  */
+// cppcheck-suppress unusedFunction
 bool StatePersistenceManager_Init(StatePersistenceManager_t *manager,
                                   const StatePersistenceManager_Config_t *config)
 {
@@ -118,10 +118,6 @@ bool StatePersistenceManager_Init(StatePersistenceManager_t *manager,
 /**
  * @brief Persists the current child lock state during IGN OFF handling.
  *
- * @details The function clears the public result structure first, validates the
- *          requested state, and then forwards the state to the configured write
- *          callback. No implicit state conversion is performed.
- *
  * @param[in] manager Pointer to the initialized runtime context.
  * @param[in] currentClState Current child lock state to persist.
  * @param[out] result Pointer receiving the operation result.
@@ -131,6 +127,7 @@ bool StatePersistenceManager_Init(StatePersistenceManager_t *manager,
  * @asil ASIL-TBD
  * @note Related UC: UC-1, UC-3, UC-7
  */
+// cppcheck-suppress unusedFunction
 bool StatePersistenceManager_HandleIgnitionOff(StatePersistenceManager_t *manager,
                                                ChildLockState_t currentClState,
                                                StatePersistenceManager_Result_t *result)
@@ -168,13 +165,13 @@ static bool StatePersistenceManager_HandleRestore(StatePersistenceManager_t *man
     bool isHandled = false;
     ChildLockState_t restoredState = CL_STATE_OFF;
     bool isPersistedStateValid = false;
-    bool isPersistedStateAvailable = false;
 
     StatePersistenceManager_ClearResult(result);
 
     if (StatePersistenceManager_IsReady(manager, result) == true)
     {
-        isPersistedStateAvailable = manager->config.readPersistedState(
+        /* Scope reduced: variable declared where first assigned. */
+        const bool isPersistedStateAvailable = manager->config.readPersistedState(
             &restoredState,
             &isPersistedStateValid);
 
@@ -208,10 +205,6 @@ static bool StatePersistenceManager_HandleRestore(StatePersistenceManager_t *man
 /**
  * @brief Restores the persisted child lock state during IGN ON handling.
  *
- * @details IGN ON recovery delegates to the shared restore helper so the
- *          module applies one consistent validation path before any Door ECU
- *          re-synchronization is requested.
- *
  * @param[in] manager Pointer to the initialized runtime context.
  * @param[out] result Pointer receiving the restore result.
  * @return true if the request was processed, otherwise false.
@@ -220,6 +213,7 @@ static bool StatePersistenceManager_HandleRestore(StatePersistenceManager_t *man
  * @asil ASIL-TBD
  * @note Related UC: UC-1, UC-3, UC-7
  */
+// cppcheck-suppress unusedFunction
 bool StatePersistenceManager_HandleIgnitionOn(StatePersistenceManager_t *manager,
                                               StatePersistenceManager_Result_t *result)
 {
@@ -229,10 +223,6 @@ bool StatePersistenceManager_HandleIgnitionOn(StatePersistenceManager_t *manager
 /**
  * @brief Restores the persisted child lock state after reset handling.
  *
- * @details Reset recovery intentionally shares the exact same logic as IGN ON
- *          so the restored state, restore status, and synchronization decision
- *          remain behaviorally identical.
- *
  * @param[in] manager Pointer to the initialized runtime context.
  * @param[out] result Pointer receiving the restore result.
  * @return true if the request was processed, otherwise false.
@@ -241,6 +231,7 @@ bool StatePersistenceManager_HandleIgnitionOn(StatePersistenceManager_t *manager
  * @asil ASIL-TBD
  * @note Related UC: UC-1, UC-3, UC-7
  */
+// cppcheck-suppress unusedFunction
 bool StatePersistenceManager_HandleReset(StatePersistenceManager_t *manager,
                                          StatePersistenceManager_Result_t *result)
 {

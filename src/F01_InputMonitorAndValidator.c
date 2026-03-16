@@ -223,6 +223,7 @@ static void detectEvents(
  * @asil        ASIL B
  * @traceability DD-CL-F01-INIT
  */
+// cppcheck-suppress unusedFunction
 void F01_InputMonitorAndValidator_Init(F01_Context_t * const ctx)
 {
     if (ctx == NULL)
@@ -255,6 +256,7 @@ void F01_InputMonitorAndValidator_Init(F01_Context_t * const ctx)
  * @asil        ASIL B
  * @traceability DD-CL-F01-RUN
  */
+// cppcheck-suppress unusedFunction
 void F01_InputMonitorAndValidator_Run(
     F01_Context_t             * const ctx,
     const F01_RawInput_t      * const input,
@@ -306,6 +308,7 @@ void F01_InputMonitorAndValidator_Run(
  * @asil        ASIL B
  * @traceability DD-CL-F01-RESET
  */
+// cppcheck-suppress unusedFunction
 void F01_InputMonitorAndValidator_Reset(F01_Context_t * const ctx)
 {
     F01_InputMonitorAndValidator_Init(ctx);

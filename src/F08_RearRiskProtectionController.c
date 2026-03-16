@@ -59,6 +59,7 @@ static void initNeutralOutput(
  * @param[in]  input   Protection inputs (risk state, ign state, current CL state).
  * @param[out] output  Output actions (target CL state, warnings).
  */
+// cppcheck-suppress unusedFunction
 void F08_RearRiskProtectionController_Run(
     const RearRiskProtectionInput_t  * const input,
     RearRiskProtectionOutput_t       * const output)

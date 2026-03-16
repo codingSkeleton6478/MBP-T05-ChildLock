@@ -1,5 +1,5 @@
 /**
- * @file door_ecu_command_handler.c
+ * @file F03_DoorEcuCommandHandler.c
  * @brief Minimal C11 implementation for F-03 DoorEcuCommandHandler.
  *
  * @details This implementation issues a child lock command based on the
@@ -12,7 +12,7 @@
  * @note Related UC: UC-1, UC-2, UC-3, UC-5
  */
 
-#include "childlock/door_ecu_command_handler.h"
+#include "F03_DoorEcuCommandHandler.h"
 
 #include <stddef.h>
 
@@ -95,6 +95,7 @@ DoorEcuCommandHandler_MapCommand(ChildLockState_t state)
  * @asil ASIL-TBD
  * @note Related UC: UC-1, UC-2, UC-3, UC-5
  */
+// cppcheck-suppress unusedFunction
 bool DoorEcuCommandHandler_HandleCommand(
     const DoorEcuCommandHandler_Input_t *input,
     DoorEcuCommandHandler_Output_t *output)

@@ -33,6 +33,7 @@ static void initNeutralOutput(F09_OccupancyAlertOutput_t * const output)
  * Public API Implementation
  * ========================================================================= */
 
+// cppcheck-suppress unusedFunction
 void F09_RearSeatOccupancyAlert_Run(
     const F09_OccupancyAlertInput_t  * const input,
     F09_OccupancyAlertOutput_t       * const output)

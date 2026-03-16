@@ -1,5 +1,5 @@
 /**
- * @file ignition_off_status_alert.c
+ * @file F10_IgnitionOffStatusAlert.c
  * @brief Minimal C11 implementation for F-10 IgnitionOffStatusAlert.
  *
  * @details This implementation evaluates the child lock state when IGN OFF
@@ -12,7 +12,7 @@
  * @note Related UC: UC-7
  */
 
-#include "childlock/ignition_off_status_alert.h"
+#include "F10_IgnitionOffStatusAlert.h"
 
 #include <stddef.h>
 
@@ -110,11 +110,6 @@ static void IgnitionOffStatusAlert_IssueLatchedAlert(IgnitionOffStatusAlert_t *a
 /**
  * @brief Initializes the F-10 context and resets alert-once state.
  *
- * @details Initialization is intentionally strict so later event handling does
- *          not need to protect against missing query dependencies. The alert
- *          latch is also reset here to keep repeated tests and startup paths
- *          deterministic.
- *
  * @param[out] alert Pointer to the runtime context.
  * @param[in] config Pointer to the dependency configuration.
  * @return true if initialization succeeded, otherwise false.
@@ -123,6 +118,7 @@ static void IgnitionOffStatusAlert_IssueLatchedAlert(IgnitionOffStatusAlert_t *a
  * @asil ASIL-TBD
  * @note Related UC: UC-7
  */
+// cppcheck-suppress unusedFunction
 bool IgnitionOffStatusAlert_Init(IgnitionOffStatusAlert_t *alert,
                                  const IgnitionOffStatusAlert_Config_t *config)
 {
@@ -148,14 +144,6 @@ bool IgnitionOffStatusAlert_Init(IgnitionOffStatusAlert_t *alert,
 /**
  * @brief Handles IGN OFF status alert generation for UC-7.
  *
- * @details This minimal implementation is intentionally state-driven. It only
- *          emits an alert on IGN OFF when the current child lock state is ON,
- *          or when state retrieval fails and a fallback is required. Once an
- *          alert is emitted, repeated IGN OFF handling is suppressed. The
- *          `activeHmiAlert` and `hmiHealthy` inputs are carried in the API for
- *          future HMI arbitration work, but they are not part of the current
- *          test-driven behavior.
- *
  * @param[in] alert Pointer to the initialized runtime context.
  * @param[in] input Pointer to the current IGN OFF handling inputs.
  * @param[out] output Pointer receiving the selected alert output.
@@ -165,6 +153,7 @@ bool IgnitionOffStatusAlert_Init(IgnitionOffStatusAlert_t *alert,
  * @asil ASIL-TBD
  * @note Related UC: UC-7
  */
+// cppcheck-suppress unusedFunction
 bool IgnitionOffStatusAlert_HandleEvent(IgnitionOffStatusAlert_t *alert,
                                         const IgnitionOffStatusAlert_Input_t *input,
                                         IgnitionOffStatusAlert_Output_t *output)

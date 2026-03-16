@@ -19,6 +19,52 @@ target_link_libraries(test_F01_InputMonitorAndValidator
 )
 gtest_discover_tests(test_F01_InputMonitorAndValidator)
 
+# F-02 Unit Test (GoogleTest)
+add_executable(test_F02_ChildLockStateDecision
+    test_F02_ChildLockStateDecision.cpp
+)
+target_link_libraries(test_F02_ChildLockStateDecision
+    PRIVATE F02_ChildLockStateDecision gtest_main
+)
+gtest_discover_tests(test_F02_ChildLockStateDecision)
+
+# F-03 Unit Test
+add_executable(test_F03_DoorEcuCommandHandler
+    test_F03_DoorEcuCommandHandler.cpp
+)
+target_link_libraries(test_F03_DoorEcuCommandHandler
+    PRIVATE F03_DoorEcuCommandHandler gtest_main
+)
+gtest_discover_tests(test_F03_DoorEcuCommandHandler)
+
+# F-04 Unit Test
+add_executable(test_F04_RearDoorOpenBlockHandler
+    test_F04_RearDoorOpenBlockHandler.cpp
+)
+target_link_libraries(test_F04_RearDoorOpenBlockHandler
+    PRIVATE F04_RearDoorOpenBlockHandler gtest_main
+)
+gtest_discover_tests(test_F04_RearDoorOpenBlockHandler)
+
+# F-05 Unit Test
+add_executable(test_F05_StatePersistenceManager
+    test_F05_StatePersistenceManager.cpp
+)
+target_link_libraries(test_F05_StatePersistenceManager
+    PRIVATE F05_StatePersistenceManager gtest_main
+)
+gtest_discover_tests(test_F05_StatePersistenceManager)
+
+# F-06 Unit Test
+add_executable(test_F06_HmiAndEventLogger
+    test_F06_HmiAndEventLogger.cpp
+)
+target_include_directories(test_F06_HmiAndEventLogger PRIVATE ${CMAKE_SOURCE_DIR}/include)
+target_link_libraries(test_F06_HmiAndEventLogger
+    PRIVATE F06_HmiAndEventLogger gtest_main
+)
+gtest_discover_tests(test_F06_HmiAndEventLogger)
+
 # F-07 Unit Test
 add_executable(test_F07_RearRiskEvaluation
     test_F07_RearRiskEvaluation.cpp
@@ -37,61 +83,6 @@ target_link_libraries(test_F08_RearRiskProtection
 )
 gtest_discover_tests(test_F08_RearRiskProtection)
 
-# F-05 Unit Test
-add_executable(test_state_persistence_manager
-    test_state_persistence_manager.cpp
-)
-target_link_libraries(test_state_persistence_manager
-    PRIVATE StatePersistenceManager gtest_main
-)
-gtest_discover_tests(test_state_persistence_manager)
-
-# F-10 Unit Test
-add_executable(test_ignition_off_status_alert
-    test_ignition_off_status_alert.cpp
-)
-target_link_libraries(test_ignition_off_status_alert
-    PRIVATE IgnitionOffStatusAlert gtest_main
-)
-gtest_discover_tests(test_ignition_off_status_alert)
-
-# F-03 Unit Test
-add_executable(test_door_ecu_command_handler
-    test_door_ecu_command_handler.cpp
-)
-target_link_libraries(test_door_ecu_command_handler
-    PRIVATE DoorEcuCommandHandler gtest_main
-)
-gtest_discover_tests(test_door_ecu_command_handler)
-
-# F-04 Unit Test
-add_executable(test_rear_door_open_block_handler
-    test_rear_door_open_block_handler.cpp
-)
-target_link_libraries(test_rear_door_open_block_handler
-    PRIVATE RearDoorOpenBlockHandler gtest_main
-)
-gtest_discover_tests(test_rear_door_open_block_handler)
-
-# Child Lock State Decision Unit Test (custom runner, no GoogleTest)
-add_executable(child_lock_state_decision_test
-    child_lock_state_decision_test.cpp
-)
-target_link_libraries(child_lock_state_decision_test
-    PRIVATE child_lock_state_decision
-)
-add_test(NAME child_lock_state_decision_test COMMAND child_lock_state_decision_test)
-
-# F-06 Unit Test
-add_executable(test_F06_HmiAndEventLogger
-    test_F06_HmiAndEventLogger.cpp
-)
-target_include_directories(test_F06_HmiAndEventLogger PRIVATE ${CMAKE_SOURCE_DIR}/include)
-target_link_libraries(test_F06_HmiAndEventLogger
-    PRIVATE F06_HmiAndEventLogger gtest_main
-)
-gtest_discover_tests(test_F06_HmiAndEventLogger)
-
 # F-09 Unit Test
 add_executable(test_F09_RearSeatOccupancyAlert
     test_F09_RearSeatOccupancyAlert.cpp
@@ -101,3 +92,12 @@ target_link_libraries(test_F09_RearSeatOccupancyAlert
     PRIVATE F09_RearSeatOccupancyAlert gtest_main
 )
 gtest_discover_tests(test_F09_RearSeatOccupancyAlert)
+
+# F-10 Unit Test
+add_executable(test_F10_IgnitionOffStatusAlert
+    test_F10_IgnitionOffStatusAlert.cpp
+)
+target_link_libraries(test_F10_IgnitionOffStatusAlert
+    PRIVATE F10_IgnitionOffStatusAlert gtest_main
+)
+gtest_discover_tests(test_F10_IgnitionOffStatusAlert)

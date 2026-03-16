@@ -224,6 +224,7 @@ static void updateHysteresis(
  * @asil        ASIL B
  * @traceability DD-CL-F07-INIT
  */
+// cppcheck-suppress unusedFunction
 void F07_RearRiskEvaluation_Init(F07_Context_t * const ctx)
 {
     /* NULL guard: do nothing if caller passes invalid pointer */
@@ -260,6 +261,7 @@ void F07_RearRiskEvaluation_Init(F07_Context_t * const ctx)
  * @asil        ASIL B
  * @traceability DD-CL-F07-RUN
  */
+// cppcheck-suppress unusedFunction
 void F07_RearRiskEvaluation_Run(
     F07_Context_t         * const ctx,
     const RearRiskInput_t * const input,
@@ -313,6 +315,7 @@ void F07_RearRiskEvaluation_Run(
  * @asil        ASIL B
  * @traceability DD-CL-F07-RESET
  */
+// cppcheck-suppress unusedFunction
 void F07_RearRiskEvaluation_Reset(F07_Context_t * const ctx)
 {
     /* Delegate to Init for a clean reset */

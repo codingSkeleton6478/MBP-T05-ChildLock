@@ -1,5 +1,5 @@
 /**
- * @file door_ecu_command_handler.h
+ * @file F03_DoorEcuCommandHandler.h
  * @brief Public API for F-03 DoorEcuCommandHandler.
  *
  * @details This module translates a target child lock state decision into a
@@ -12,8 +12,8 @@
  * @note Related UC: UC-1, UC-2, UC-3, UC-5
  */
 
-#ifndef CHILDLOCK_DOOR_ECU_COMMAND_HANDLER_H
-#define CHILDLOCK_DOOR_ECU_COMMAND_HANDLER_H
+#ifndef F03_DOOR_ECU_COMMAND_HANDLER_H
+#define F03_DOOR_ECU_COMMAND_HANDLER_H
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -134,4 +134,4 @@ bool DoorEcuCommandHandler_HandleCommand(
     const DoorEcuCommandHandler_Input_t *input,
     DoorEcuCommandHandler_Output_t *output);
 
-#endif /* CHILDLOCK_DOOR_ECU_COMMAND_HANDLER_H */
+#endif /* F03_DOOR_ECU_COMMAND_HANDLER_H */

@@ -40,6 +40,46 @@ target_include_directories(F01_InputMonitorAndValidator
     PUBLIC ${CMAKE_SOURCE_DIR}/include
 )
 
+# F-02: Child Lock State Decision (C)
+add_library(F02_ChildLockStateDecision
+    src/F02_ChildLockStateDecision.c
+)
+target_include_directories(F02_ChildLockStateDecision
+    PUBLIC ${CMAKE_SOURCE_DIR}/include
+)
+
+# F-03: Door ECU Command Handler (C)
+add_library(F03_DoorEcuCommandHandler
+    src/F03_DoorEcuCommandHandler.c
+)
+target_include_directories(F03_DoorEcuCommandHandler
+    PUBLIC ${CMAKE_SOURCE_DIR}/include
+)
+
+# F-04: Rear Door Open Block Handler (C)
+add_library(F04_RearDoorOpenBlockHandler
+    src/F04_RearDoorOpenBlockHandler.c
+)
+target_include_directories(F04_RearDoorOpenBlockHandler
+    PUBLIC ${CMAKE_SOURCE_DIR}/include
+)
+
+# F-05: State Persistence Manager (C)
+add_library(F05_StatePersistenceManager
+    src/F05_StatePersistenceManager.c
+)
+target_include_directories(F05_StatePersistenceManager
+    PUBLIC ${CMAKE_SOURCE_DIR}/include
+)
+
+# F-06: HMI and Event Logger (C)
+add_library(F06_HmiAndEventLogger
+    src/F06_HmiAndEventLogger.c
+)
+target_include_directories(F06_HmiAndEventLogger
+    PUBLIC ${CMAKE_SOURCE_DIR}/include
+)
+
 # F-07: Rear Risk Evaluation (C)
 add_library(F07_RearRiskEvaluation
     src/F07_RearRiskEvaluation.c
@@ -56,54 +96,6 @@ target_include_directories(F08_RearRiskProtectionController
     PUBLIC ${CMAKE_SOURCE_DIR}/include
 )
 
-# F-05: State Persistence Manager (C)
-add_library(StatePersistenceManager
-    src/childlock/state_persistence_manager.c
-)
-target_include_directories(StatePersistenceManager
-    PUBLIC ${CMAKE_SOURCE_DIR}/include
-)
-
-# F-10: Ignition Off Status Alert (C)
-add_library(IgnitionOffStatusAlert
-    src/childlock/ignition_off_status_alert.c
-)
-target_include_directories(IgnitionOffStatusAlert
-    PUBLIC ${CMAKE_SOURCE_DIR}/include
-)
-
-# F-03: Door ECU Command Handler (C)
-add_library(DoorEcuCommandHandler
-    src/childlock/door_ecu_command_handler.c
-)
-target_include_directories(DoorEcuCommandHandler
-    PUBLIC ${CMAKE_SOURCE_DIR}/include
-)
-
-# F-04: Rear Door Open Block Handler (C)
-add_library(RearDoorOpenBlockHandler
-    src/childlock/rear_door_open_block_handler.c
-)
-target_include_directories(RearDoorOpenBlockHandler
-    PUBLIC ${CMAKE_SOURCE_DIR}/include
-)
-
-# Child Lock State Decision (C++)
-add_library(child_lock_state_decision
-    src/child_lock_state_decision.cpp
-)
-target_include_directories(child_lock_state_decision
-    PUBLIC ${CMAKE_SOURCE_DIR}/include
-)
-
-# F-06: HMI and Event Logger (C)
-add_library(F06_HmiAndEventLogger
-    src/F06_HmiAndEventLogger.c
-)
-target_include_directories(F06_HmiAndEventLogger
-    PUBLIC ${CMAKE_SOURCE_DIR}/include
-)
-
 # F-09: Rear Seat Occupancy Alert (C)
 add_library(F09_RearSeatOccupancyAlert
     src/F09_RearSeatOccupancyAlert.c
@@ -112,6 +104,13 @@ target_include_directories(F09_RearSeatOccupancyAlert
     PUBLIC ${CMAKE_SOURCE_DIR}/include
 )
 
+# F-10: Ignition Off Status Alert (C)
+add_library(F10_IgnitionOffStatusAlert
+    src/F10_IgnitionOffStatusAlert.c
+)
+target_include_directories(F10_IgnitionOffStatusAlert
+    PUBLIC ${CMAKE_SOURCE_DIR}/include
+)
+
 enable_testing()
 add_subdirectory(test)
-

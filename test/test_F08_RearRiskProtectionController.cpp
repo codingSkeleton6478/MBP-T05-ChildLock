@@ -153,6 +153,56 @@ TEST_F(F08RearRiskProtectionTest, Robustness_NullPointers) {
     
     // Both missing should not crash
     F08_RearRiskProtectionController_Run(NULL, NULL);
-    
+
     SUCCEED();
+}
+
+/* =========================================================================
+ * 4. Additional branch coverage
+ * ========================================================================= */
+
+TEST_F(F08RearRiskProtectionTest, NoRisk_CLOn_MaintainState_NoWarning)
+{
+    input.riskHigh = false;
+    input.riskValid = true;
+    input.currentCLState = CL_STATE_ON;
+
+    F08_RearRiskProtectionController_Run(&input, &output);
+
+    EXPECT_EQ(output.targetCLState, CL_STATE_ON); /* maintains current state */
+    EXPECT_FALSE(output.clChanged);
+    EXPECT_EQ(output.warningMsgId, WARNING_MSG_NONE);
+    EXPECT_FALSE(output.warningSound);
+    EXPECT_FALSE(output.eventLog);
+}
+
+TEST_F(F08RearRiskProtectionTest, IgnitionOff_HighRisk_NoAction)
+{
+    input.ignitionState = IGN_STATE_OFF;
+    input.riskHigh = true;
+    input.riskValid = true;
+    input.currentCLState = CL_STATE_OFF;
+
+    F08_RearRiskProtectionController_Run(&input, &output);
+
+    /* IGN OFF: feature inactive, output stays neutral */
+    EXPECT_EQ(output.targetCLState, CL_STATE_OFF);
+    EXPECT_FALSE(output.clChanged);
+    EXPECT_EQ(output.warningMsgId, WARNING_MSG_NONE);
+    EXPECT_FALSE(output.eventLog);
+}
+
+TEST_F(F08RearRiskProtectionTest, IgnitionOff_SensorFault_NoAction)
+{
+    input.ignitionState = IGN_STATE_OFF;
+    input.riskValid = false;
+    input.currentCLState = CL_STATE_OFF;
+
+    F08_RearRiskProtectionController_Run(&input, &output);
+
+    /* IGN OFF: feature inactive even for sensor fault */
+    EXPECT_EQ(output.targetCLState, CL_STATE_OFF);
+    EXPECT_FALSE(output.clChanged);
+    EXPECT_EQ(output.warningMsgId, WARNING_MSG_NONE);
+    EXPECT_FALSE(output.eventLog);
 }

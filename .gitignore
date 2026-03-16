@@ -3,6 +3,13 @@ build/
 cmake-build-debug/
 cmake-build-release/
 
+# test reports
+*.html
+*.css
+*.js
+*.xml
+cppcheck_html/
+
 # Created by https://www.toptal.com/developers/gitignore/api/windows,macos,jetbrains+all,clion+all,git,visualstudio,visualstudiocode,homebrew
 # Edit at https://www.toptal.com/developers/gitignore?templates=windows,macos,jetbrains+all,clion+all,git,visualstudio,visualstudiocode,homebrew
 
