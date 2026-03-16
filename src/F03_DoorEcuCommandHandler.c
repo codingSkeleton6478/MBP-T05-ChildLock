@@ -95,7 +95,6 @@ DoorEcuCommandHandler_MapCommand(ChildLockState_t state)
  * @asil ASIL-TBD
  * @note Related UC: UC-1, UC-2, UC-3, UC-5
  */
-// cppcheck-suppress unusedFunction
 bool DoorEcuCommandHandler_HandleCommand(
     const DoorEcuCommandHandler_Input_t *input,
     DoorEcuCommandHandler_Output_t *output)

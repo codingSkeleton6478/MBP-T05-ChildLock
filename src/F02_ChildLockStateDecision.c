@@ -22,7 +22,6 @@ static DecisionResult MakeResult(const ChildLockState targetState,
     return result;
 }
 
-// cppcheck-suppress unusedFunction
 DecisionResult DecideChildLockState(const DecisionInput* input)
 {
     if (input->validCrashSignal)

@@ -118,7 +118,6 @@ static void IgnitionOffStatusAlert_IssueLatchedAlert(IgnitionOffStatusAlert_t *a
  * @asil ASIL-TBD
  * @note Related UC: UC-7
  */
-// cppcheck-suppress unusedFunction
 bool IgnitionOffStatusAlert_Init(IgnitionOffStatusAlert_t *alert,
                                  const IgnitionOffStatusAlert_Config_t *config)
 {
@@ -153,14 +152,11 @@ bool IgnitionOffStatusAlert_Init(IgnitionOffStatusAlert_t *alert,
  * @asil ASIL-TBD
  * @note Related UC: UC-7
  */
-// cppcheck-suppress unusedFunction
 bool IgnitionOffStatusAlert_HandleEvent(IgnitionOffStatusAlert_t *alert,
                                         const IgnitionOffStatusAlert_Input_t *input,
                                         IgnitionOffStatusAlert_Output_t *output)
 {
     bool isHandled = false;
-    ChildLockState_t currentState = CL_STATE_OFF;
-    bool querySucceeded = false;
 
     IgnitionOffStatusAlert_ClearOutput(output);
 
@@ -170,7 +166,8 @@ bool IgnitionOffStatusAlert_HandleEvent(IgnitionOffStatusAlert_t *alert,
 
         if ((input->ignitionOffEvent == true) && (alert->alertAlreadyIssued == false))
         {
-            querySucceeded = alert->config.queryChildLockState(&currentState);
+            ChildLockState_t currentState = CL_STATE_OFF;
+            const bool querySucceeded = alert->config.queryChildLockState(&currentState);
 
             if ((querySucceeded == false)
                 || (IgnitionOffStatusAlert_IsValidState(currentState) == false))

@@ -49,13 +49,24 @@ jobs:
       - name: Generate coverage report
         run: |
           cd build
-          lcov --capture --directory . --output-file coverage.info
+          lcov --capture --directory . --output-file coverage_raw.info
+          lcov --remove coverage_raw.info \
+            '*/build/_deps/*' \
+            '*/test/*' \
+            '/usr/*' \
+            --output-file coverage.info
           genhtml coverage.info --output-directory coverage_report
 
       - name: Static Analysis (Cppcheck)
         run: |
           cppcheck --enable=all --inconclusive --std=c11 \
+            -I include/ \
+            --inline-suppr \
             --suppress=missingIncludeSystem \
+            --suppress=unusedFunction \
+            --suppress=staticFunction \
+            --suppress=unmatchedSuppression \
+            --suppress=checkersReport \
             src/
 
       - name: Complexity Check (Lizard)

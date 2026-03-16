@@ -94,7 +94,6 @@ static bool StatePersistenceManager_IsReady(const StatePersistenceManager_t *man
  * @asil ASIL-TBD
  * @note Related UC: UC-1, UC-3, UC-7
  */
-// cppcheck-suppress unusedFunction
 bool StatePersistenceManager_Init(StatePersistenceManager_t *manager,
                                   const StatePersistenceManager_Config_t *config)
 {
@@ -127,7 +126,6 @@ bool StatePersistenceManager_Init(StatePersistenceManager_t *manager,
  * @asil ASIL-TBD
  * @note Related UC: UC-1, UC-3, UC-7
  */
-// cppcheck-suppress unusedFunction
 bool StatePersistenceManager_HandleIgnitionOff(StatePersistenceManager_t *manager,
                                                ChildLockState_t currentClState,
                                                StatePersistenceManager_Result_t *result)
@@ -213,7 +211,6 @@ static bool StatePersistenceManager_HandleRestore(StatePersistenceManager_t *man
  * @asil ASIL-TBD
  * @note Related UC: UC-1, UC-3, UC-7
  */
-// cppcheck-suppress unusedFunction
 bool StatePersistenceManager_HandleIgnitionOn(StatePersistenceManager_t *manager,
                                               StatePersistenceManager_Result_t *result)
 {
@@ -231,7 +228,6 @@ bool StatePersistenceManager_HandleIgnitionOn(StatePersistenceManager_t *manager
  * @asil ASIL-TBD
  * @note Related UC: UC-1, UC-3, UC-7
  */
-// cppcheck-suppress unusedFunction
 bool StatePersistenceManager_HandleReset(StatePersistenceManager_t *manager,
                                          StatePersistenceManager_Result_t *result)
 {
