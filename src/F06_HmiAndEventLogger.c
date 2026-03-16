@@ -36,7 +36,6 @@ static bool hasValidConfig(const F06_HmiLoggerConfig_t * const config)
  * Public API Implementation
  * ========================================================================= */
 
-// cppcheck-suppress unusedFunction
 bool F06_HmiAndEventLogger_Init(
     F06_HmiLoggerContext_t      * const ctx,
     const F06_HmiLoggerConfig_t * const config)
@@ -58,7 +57,6 @@ bool F06_HmiAndEventLogger_Init(
     return isInitSuccess;
 }
 
-// cppcheck-suppress unusedFunction
 void F06_HmiAndEventLogger_Process(
     const F06_HmiLoggerContext_t * const ctx,
     const WarningMsgId_t                 msgId,

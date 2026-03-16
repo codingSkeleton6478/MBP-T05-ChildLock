@@ -59,7 +59,6 @@ static bool RearDoorOpenBlockHandler_IsValidState(ChildLockState_t state)
  * @asil ASIL-TBD
  * @note Related UC: UC-4
  */
-// cppcheck-suppress unusedFunction
 bool RearDoorOpenBlockHandler_HandleEvent(
     const RearDoorOpenBlockHandler_Input_t *input,
     RearDoorOpenBlockHandler_Output_t *output)

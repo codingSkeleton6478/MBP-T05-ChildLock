@@ -118,7 +118,6 @@ static void IgnitionOffStatusAlert_IssueLatchedAlert(IgnitionOffStatusAlert_t *a
  * @asil ASIL-TBD
  * @note Related UC: UC-7
  */
-// cppcheck-suppress unusedFunction
 bool IgnitionOffStatusAlert_Init(IgnitionOffStatusAlert_t *alert,
                                  const IgnitionOffStatusAlert_Config_t *config)
 {
@@ -153,7 +152,6 @@ bool IgnitionOffStatusAlert_Init(IgnitionOffStatusAlert_t *alert,
  * @asil ASIL-TBD
  * @note Related UC: UC-7
  */
-// cppcheck-suppress unusedFunction
 bool IgnitionOffStatusAlert_HandleEvent(IgnitionOffStatusAlert_t *alert,
                                         const IgnitionOffStatusAlert_Input_t *input,
                                         IgnitionOffStatusAlert_Output_t *output)
