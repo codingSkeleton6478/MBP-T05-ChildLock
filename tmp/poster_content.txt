@@ -1,0 +1,47 @@
+--- Slide 1 ---
+GitHub Actions 기반 CI를 통해
+빌드, 테스트, 커버리지, 정적 분석을 자동 수행한다.
+Static Analysis : Cppcheck
+Complexity : Lizard (≤10)
+Coverage : lcov
+Code Metrics : cloc
+
+<품질 기준>
+함수 길이 ≤ 80 lines
+Dynamic Memory 사용 금지
+Defensive Programming 적용
+Project Overview
+ISO 26262 Child Lock SW 시뮬레이션 프로젝트
+팀명 : 전차 (전자식 차일드락)
+팀원 : 박기준(팀장) 김도균 김이안 박찬석 이승욱 이한결
+모비우스 부트캠프 1기 PBL 보고서
+System Architecture & Use Case
+Detailed Design
+Verification & Testing
+CI/CT & Code Quality
+🔷 FG-02
+하차 안전 보조
+🔷 FG-01 
+도어 잠금/해제
+Safety Analysis & Requirements
+[표준 기반 안전 요구 정의 및 추적성 확보]
+① ISO 26262 기반으로 시스템 Hazard 식별 및 Safety Goal 정의
+② ASIL 수준에 따른 기능 안전 요구사항(Function Safety Requirement) 도출
+③ MISRA C/C++ 규칙을 적용하여 안전한 코드 설계 기준 수립
+④ Automotive SPICE 기반 Requirements, Design, Code, Test 간 양방향 추적성 확보
+⑤ 모든 로직은 요구사항(SRS/SDD)에 기반하여 구현
+Child Lock 시스템은 입력, 제어, 출력 모듈로 구성되며 상태 기반(State Machine)으로 동작한다.
+
+Input : 운전자 입력, 차량 상태
+Control : 상태 전이 및 안전 검증 로직
+Output : Door Lock 제어
+① Lock / Unlock 제어
+② 주행 조건 기반 제한
+③ Fail-safe 처리
+[Use Case]
+① 정상  ② 경계값  ③ 오류  ④ Fail-safe  ⑤상태 전이 검증 / 입력 검증 테스트
+<Coverage>
+Line / Function / Branch Coverage 확보
+안전 로직 중심 테스트 강화
+요구사항 기반 테스트를 먼저 정의하고 구현
+

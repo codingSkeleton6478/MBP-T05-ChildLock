@@ -1,0 +1,259 @@
+--- Slide 1 ---
+MOBIUS BOOTCAMP 1기
+PBL 결과발표
+ISO 26262 기반 소프트웨어 V-모델 V&V 적용
+ISO 26262 및 A-SPICE 기반 프로세스
+전자식 차일드 락 시스템 (MBP-T05)
+2026. 03. 22
+현대모비스 x LIKELION
+
+--- Slide 2 ---
+01. 팀 소개
+MOBIUS BOOTCAMP 1기 | PBL 결과발표 | 2/10
+이한결
+@hangyeoli  |  프로젝트 메인테이너 & F-01
+F-01 InputMonitorAndValidator
+• 전체 Issues 생성 관리 (Issue #4~#13)
+• CMake 빌드 구성 (PR#17)
+• Scope Fix & CTest (PR#26)
+김이안
+@iank1m  |  상태 결정 로직 개발자
+F-02 ChildLockStateDecision
+• 차일드락 핵심 상태 전이 로직
+• 단독 구현 (PR#14)
+• ISO 26262 ASIL 설계 반영
+박찬석
+@p-chanseok  |  TDD 기반 제어 로직 개발자
+F-03 DoorEcuCommandHandler
+F-04 RearDoorOpenBlockHandler
+• TDD 방식 Door ECU 제어 (PR#23)
+• 69/69 테스트 케이스 통과 (PR#22)
+이승욱
+@josephuk77  |  상태 유지 & 알림 개발자
+F-05 StatePersistenceManager
+F-10 IgnitionOffStatusAlert
+• 상태 저장/복구 및 시동 OFF 알림 (PR#19, #20)
+• UML 다이어그램 문서화 (Issue#1/PR#2)
+김도균
+@codingSkeleton6478  |  HMI & 좌석 알림 개발자
+F-06 HmiAndEventLogger
+F-09 RearSeatOccupancyAlert
+• 경고/알림 HMI 출력 로직 (PR#24)
+• 이벤트 로거 구현
+박기준 (팀장)
+@PKJthecreator  |  PM & Safety 모듈 개발자
+F-07 RearRiskEvaluation
+F-08 RearRiskProtectionController
+• 후방 위험 평가/보호 핵심 ASIL B 로직
+• (PR#15, PR#16) + PM 총괄
+
+--- Slide 3 ---
+02. 문제 정의
+AS-IS (현재 문제점)
+문제점 1: 기계식 차일드 락의 운전자 직접 제어 불편함 및 확인 어려움
+문제점 2: 보호자가 뒷좌석 상황을 인지하지 못한 상태에서 문 열림 시 사고 위험
+TO-BE (목표 상태)
+목표 1: 뒷좌석 통합 전자 제어(운전석 제어) 도입을 통한 편의성 개선
+목표 2: 후방 레이더 연동 스마트 하차 안전 보조(FG-02) 기능 도입
+핵심 연구 질문
+ISO 26262 기능 안전을 준수하면서, 승객의 편의성과 하차 안전을 모두 충족하는 지능형 시스템을 어떻게 구현·검증할 것인가?
+MOBIUS BOOTCAMP 1기 | PBL 결과발표 | 3/10
+
+--- Slide 4 ---
+03. 솔루션 개요
+지능형 센서 및 차량 상태 연동 제어 기반의 통합 하차 안전 솔루션 (FG-01 / FG-02)
+C/C++ 기반 ISO 26262 및 FMEA/HAZOP 상위 기능 안전 분석 적용 모듈
+1
+FG-01: 도어 잠금 및 해제 제어
+속도, 충돌, 스위치 연동 로직 적용 및 직전 상태 복구(Safe State) 제어
+2
+FG-02: 하차 안전 보조 제어
+후방 위험 판단 시 자동 잠금 유지 및 뒷좌석 점유/출발 상태 전환 시 운전자 알림 연동
+3
+Fail-Safe 설계 및 테스트 결함 주입 (Fault Injection) 방어
+FMEA/HAZOP 기반 요구사항 분석 적용 및 Fault Injection 시나리오 방어를 통한 Fail-Safe 설계
+MOBIUS BOOTCAMP 1기 | PBL 결과발표 | 4/10
+
+--- Slide 5 ---
+04. 기술 스택 & 아키텍처
+Tech Stack
+Language
+C11, C++17
+Framework
+ISO 26262, ASPICE, V-Model 워크플로우 적용
+Testing
+Google Test, Cppcheck (단위 테스트 및 정적 분석)
+Tools
+GitHub Actions (CI 자동화), Draw.io (UML)
+Environment
+Ubuntu 22.04 LTS
+MOBIUS BOOTCAMP 1기 | PBL 결과발표 | 5/10
+🔷 Child Lock 상태 다이어그램
+🔷 유스케이스 다이어그램 (Normal)
+⚙️  CI/CT 자동화 파이프라인 (GitHub Actions)
+Static Analysis
+Cppcheck
+Complexity
+Lizard (≤10)
+Coverage
+lcov / gcov
+Code Metrics
+cloc
+Unit Test
+GTest v1.17.0
+(140 cases)
+Build System
+CMake + CTest
+📌 품질 기준: 함수 ≤80 lines  |  Dynamic Memory 금지  |  Defensive Programming  |  MISRA C/C++ 준수
+
+--- Slide 6 ---
+05. 구현 결과
+🔷 FG-01: 도어 잠금/해제 제어
+UC-1, 2, 3, 4 반영
+🔷 FG-02: 하차 안전 보조
+UC-5, 6, 7 반영
+🔷 UC-1 시퀀스: 운전자 ON/OFF 제어
+스위치 → ECU → HMI 흐름
+🔷 UC-3 시퀀스: 충돌 시 비상 해제
+ASIL B 안전 해제 경로
+MOBIUS BOOTCAMP 1기 | PBL 결과발표 | 6/10
+
+--- Slide 7 ---
+06. 테스트 & 검증
+테스트 케이스 및 결과
+ASIL B / QM 검증 요구사항 충족 및 양방향 추적성(Traceability) 점검 완료
+100%
+<1ms
+100%
+100%
+Test ID
+UC
+테스트 항목
+기법
+ASIL
+TC-001
+UC-1
+정차 중 수동 스위치 제어 정상 동작
+EP
+QM
+TC-002
+UC-1
+스위치 채터링 디바운싱 - 49ms (Off-limit)
+BVA
+QM
+TC-003
+UC-1
+스위치 채터링 디바운싱 - 50ms (On-limit)
+BVA
+QM
+TC-004
+UC-1
+주행 중 해제 차단 - 3.0km/h (On-limit)
+BVA
+ASIL B
+TC-005
+UC-1
+주행 중 해제 허용 - 2.9km/h (Off-limit)
+BVA
+ASIL B
+TC-006
+UC-1
+ECU 통신 단절 재전송 및 Fail-Safe 안전상태
+FI
+QM
+TC-007
+UC-2
+속도 초과 자동잠금 미동작 - 14.9km/h
+BVA
+QM
+TC-008
+UC-2
+속도 초과 자동잠금 동작 - 15.0km/h
+BVA
+QM
+TC-009
+UC-3
+충돌 시 비상 해제 (복합조건 = True)
+DT
+ASIL B
+TC-010
+UC-3
+충돌 단일조건 무시 (오동작 방지)
+DT
+ASIL B
+TC-011
+UC-4
+ECU 상태 전이(Init→Normal→Lock) 핸들 차단
+ST
+QM
+TC-012
+UC-5
+후방 객체(거리/속도/시간) 복합 감지
+PW
+QM
+TC-013
+UC-5
+후방 센서 노이즈/반복 경고 히스테리시스
+EP
+QM
+TC-014
+UC-6
+승객 점유 및 잠금 OFF 출발 시 알림
+DT
+QM
+TC-015
+UC-6
+점유 센서 에러 발생 시 보호 로직
+FI
+QM
+단위 테스트
+140 건
+통과율
+100%  (0 Fail)
+커버리지
+100%  Branch
+처리 속도
+< 1 ms
+시스템 TC
+15 건
+프레임워크
+GTest v1.17
+MOBIUS BOOTCAMP 1기 | PBL 결과발표 | 7/10
+
+--- Slide 8 ---
+07. 학습 내용 & 교훈
+기술적 학습
+ISO 26262/ASPICE 산출물 기반 요구사항(SRS, SwDD) 작성 체화 및 V-모델 기반 설계-구현 워크플로우 경험
+협업 & 프로세스
+GitHub Action을 활용한 CI/CT 자동 검증 파이프라인 연동 및 정적 분석 룰셋(Cppcheck) 도입 경험
+도전 과제 & 해결 과정
+도전 과제
+정상 동작 외의 복잡한 예외 조건(센서 에러, 동시 입력 등) 처리 시 상태 전이 충돌 위험 증가
+해결 방법
+제어 우선순위를 반영한 Decision Table 설계로 논리적 결함 차단 및 Fault Injection 시나리오화로 해결
+MOBIUS BOOTCAMP 1기 | PBL 결과발표 | 8/10
+
+--- Slide 9 ---
+08. 향후 계획
+1단계
+CAN 통신 프로토콜 통합 제어
+다중 제어기 통합 시그널 최적화 연동
+2단계
+동적 주행 센서 (라이다/레이더) 시그널 결합
+결합 시나리오 확장 및 판단 신뢰성 증대
+3단계
+T-05 도어 제어 ECU 타겟 하드웨어 포팅
+제어기 로직 고도화 적용
+실무 적용 가능성
+현대모비스 차세대 통합 하차 제어 시스템 모듈
+추가 개발 아이디어
+BLE 기반 부모 스마트폰 앱 연동 강제 오버라이드 기능 추가
+MOBIUS BOOTCAMP 1기 | PBL 결과발표 | 9/10
+
+--- Slide 10 ---
+Q & A
+질문과 답변
+전차 팀
+감사합니다
+MOBIUS BOOTCAMP 1기 | 현대모비스 x LIKELION
+
