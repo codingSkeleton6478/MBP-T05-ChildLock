@@ -1,0 +1,58 @@
+﻿Loading  : c:\GIThub coding\1. F-07,F-08 개발\MBP-T05-ChildLock\docs\MBP-T05_ChildLock_결과발표_Updated.pptx
+  [Slide 2] 팀원 역할 교체
+  [Slide 3] 문제 정의 내용 보강
+python : Traceback (m
+ost recent call last)
+:
+위치 줄:1 문자:1
++ python tmp\update_p
+ptx_v3.py 2>&1 | Out-
+File -FilePath tmp\v3
+_output. ...
++ ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~
+    + CategoryInfo   
+           : NotSpe  
+  cified: (Traceba   
+ ck (most recent     
+call last)::Stri    n
+g) [], RemoteEx    ce
+ption
+    + FullyQualified 
+   ErrorId : Native  
+  CommandError
+ 
+  File "C:\GIThub cod
+ing\1. F-07,F-08 개발\M
+BP-T05-ChildLock\tmp\
+update_pptx_v3.py", l
+ine 617, in <module>
+    main()
+    ~~~~^^
+  File "C:\GIThub cod
+ing\1. F-07,F-08 개발\M
+BP-T05-ChildLock\tmp\
+update_pptx_v3.py", l
+ine 604, in main
+    fix_slide5_arch(p
+rs.slides[4])
+    ~~~~~~~~~~~~~~~^^
+^^^^^^^^^^^^^
+  File "C:\GIThub cod
+ing\1. F-07,F-08 개발\M
+BP-T05-ChildLock\tmp\
+update_pptx_v3.py", l
+ine 195, in fix_slide
+5_arch
+    print("  [Slide 5
+] 기술스택 \u2014 왼쪽에 sta
+te diagram 삽입")
+    ~~~~~^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: '
+cp949' codec can't en
+code character '\u201
+4' in position 17: il
+legal multibyte seque
+nce
