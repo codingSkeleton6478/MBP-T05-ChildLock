@@ -1,309 +1,0 @@
---- Slide Layouts ---
-[0] Title Slide
-  - Pld 0: Title 1
-  - Pld 1: Subtitle 2
-  - Pld 10: Date Placeholder 3
-  - Pld 11: Footer Placeholder 4
-  - Pld 12: Slide Number Placeholder 5
-[1] Title and Content
-  - Pld 0: Title 1
-  - Pld 1: Content Placeholder 2
-  - Pld 10: Date Placeholder 3
-  - Pld 11: Footer Placeholder 4
-  - Pld 12: Slide Number Placeholder 5
-[2] Section Header
-  - Pld 0: Title 1
-  - Pld 1: Text Placeholder 2
-  - Pld 10: Date Placeholder 3
-  - Pld 11: Footer Placeholder 4
-  - Pld 12: Slide Number Placeholder 5
-[3] Two Content
-  - Pld 0: Title 1
-  - Pld 1: Content Placeholder 2
-  - Pld 2: Content Placeholder 3
-  - Pld 10: Date Placeholder 4
-  - Pld 11: Footer Placeholder 5
-  - Pld 12: Slide Number Placeholder 6
-[4] Comparison
-  - Pld 0: Title 1
-  - Pld 1: Text Placeholder 2
-  - Pld 2: Content Placeholder 3
-  - Pld 3: Text Placeholder 4
-  - Pld 4: Content Placeholder 5
-  - Pld 10: Date Placeholder 6
-  - Pld 11: Footer Placeholder 7
-  - Pld 12: Slide Number Placeholder 8
-[5] Title Only
-  - Pld 0: Title 1
-  - Pld 10: Date Placeholder 2
-  - Pld 11: Footer Placeholder 3
-  - Pld 12: Slide Number Placeholder 4
-[6] Blank
-  - Pld 10: Date Placeholder 1
-  - Pld 11: Footer Placeholder 2
-  - Pld 12: Slide Number Placeholder 3
-[7] Content with Caption
-  - Pld 0: Title 1
-  - Pld 1: Content Placeholder 2
-  - Pld 2: Text Placeholder 3
-  - Pld 10: Date Placeholder 4
-  - Pld 11: Footer Placeholder 5
-  - Pld 12: Slide Number Placeholder 6
-[8] Picture with Caption
-  - Pld 0: Title 1
-  - Pld 1: Picture Placeholder 2
-  - Pld 2: Text Placeholder 3
-  - Pld 10: Date Placeholder 4
-  - Pld 11: Footer Placeholder 5
-  - Pld 12: Slide Number Placeholder 6
-[9] Title and Vertical Text
-  - Pld 0: Title 1
-  - Pld 1: Vertical Text Placeholder 2
-  - Pld 10: Date Placeholder 3
-  - Pld 11: Footer Placeholder 4
-  - Pld 12: Slide Number Placeholder 5
-[10] Vertical Title and Text
-  - Pld 0: Vertical Title 1
-  - Pld 1: Vertical Text Placeholder 2
-  - Pld 10: Date Placeholder 3
-  - Pld 11: Footer Placeholder 4
-  - Pld 12: Slide Number Placeholder 5
-
---- Slides Text ---
-
---- Slide 1 ---
-
-
-MOBIUS BOOTCAMP 1기
-PBL 결과발표
-[PBL 과목명 입력]
-예: PBL1 ISO26262 / PBL2 ASPICE / PBL3 SW설계 / PBL4 CANoe / PBL5 데이터분석 / PBL6 AUTOSAR
-[팀명]
-[프로젝트명]
-2026. 02. __
-현대모비스 x LIKELION
-
---- Slide 2 ---
-
-01. 팀 소개
-
-
-
-[팀원 1 이름]
-[역할]
-• 담당 업무 1• 담당 업무 2• 기술 스택
-
-
-[팀원 2 이름]
-[역할]
-• 담당 업무 1• 담당 업무 2• 기술 스택
-
-
-[팀원 3 이름]
-[역할]
-• 담당 업무 1• 담당 업무 2• 기술 스택
-
-
-[팀원 4 이름]
-[역할]
-• 담당 업무 1• 담당 업무 2• 기술 스택
-MOBIUS BOOTCAMP 1기 | PBL 결과발표 | 2/10
-
---- Slide 3 ---
-
-02. 문제 정의
-
-
-AS-IS (현재 문제점)
-• 문제점 1: [설명]• 문제점 2: [설명]• 문제점 3: [설명]
-
-
-TO-BE (목표 상태)
-• 목표 1: [설명]• 목표 2: [설명]• 목표 3: [설명]
-
-핵심 연구 질문
-[이 프로젝트를 통해 해결하고자 하는 핵심 질문을 작성하세요]예: "차량 주행 데이터를 분석하여 운전자의 위험 운전 패턴을 사전에 감지할 수 있는가?"
-MOBIUS BOOTCAMP 1기 | PBL 결과발표 | 3/10
-
---- Slide 4 ---
-
-03. 솔루션 개요
-
-
-[솔루션 한 줄 요약]
-예: CAN 데이터 기반 실시간 이상 탐지 시스템
-
-
-1
-[핵심 기능 1]
-기능에 대한 상세 설명을이곳에 작성합니다.• 세부사항 1• 세부사항 2
-
-
-2
-[핵심 기능 2]
-기능에 대한 상세 설명을이곳에 작성합니다.• 세부사항 1• 세부사항 2
-
-
-3
-[핵심 기능 3]
-기능에 대한 상세 설명을이곳에 작성합니다.• 세부사항 1• 세부사항 2
-MOBIUS BOOTCAMP 1기 | PBL 결과발표 | 4/10
-
---- Slide 5 ---
-
-04. 기술 스택 & 아키텍처
-
-
-[시스템 아키텍처 다이어그램]
-이미지를 삽입하거나 도형으로 구성하세요
-
-Tech Stack
-Language
-[Python, C, etc.]
-Framework
-[CANoe, AUTOSAR, etc.]
-Database
-[MySQL, etc.]
-Tools
-[Git, JIRA, etc.]
-Hardware
-[CAN 장비, etc.]
-MOBIUS BOOTCAMP 1기 | PBL 결과발표 | 5/10
-
---- Slide 6 ---
-
-05. 구현 결과
-
-
-[스크린샷 삽입]
-화면 1: [기능명]
-
-[스크린샷 삽입]
-화면 2: [기능명]
-
-[스크린샷 삽입]
-화면 3: [기능명]
-
-[스크린샷 삽입]
-화면 4: [기능명]
-MOBIUS BOOTCAMP 1기 | PBL 결과발표 | 6/10
-
---- Slide 7 ---
-
-06. 테스트 & 검증
-
-
-테스트 케이스 및 결과
-
-테스트 항목
-
-예상 결과
-
-실제 결과
-
-Pass/Fail
-
-[입력]
-
-[입력]
-
-[입력]
-
-[입력]
-
-[입력]
-
-[입력]
-
-[입력]
-
-[입력]
-
-[입력]
-
-[입력]
-
-[입력]
-
-[입력]
-
-[입력]
-
-[입력]
-
-[입력]
-
-[입력]
-
-[입력]
-
-[입력]
-
-[입력]
-
-[입력]
-
-성과 지표
-정확도
-[__]%
-처리 속도
-[__]ms
-테스트 통과율
-[__]%
-커버리지
-[__]%
-MOBIUS BOOTCAMP 1기 | PBL 결과발표 | 7/10
-
---- Slide 8 ---
-
-07. 학습 내용 & 교훈
-
-
-기술적 학습
-• [학습 내용 1]• [학습 내용 2]• [학습 내용 3]
-
-협업 & 프로세스
-• [학습 내용 1]• [학습 내용 2]• [학습 내용 3]
-
-도전 과제 & 해결 과정
-도전 과제
-• [어려웠던 점 1]• [어려웠던 점 2]
-해결 방법
-• [해결 방법 1]• [해결 방법 2]
-MOBIUS BOOTCAMP 1기 | PBL 결과발표 | 8/10
-
---- Slide 9 ---
-
-08. 향후 계획
-
-
-
-
-1단계
-[단기 개선]
-• 상세 계획• 상세 계획
-
-2단계
-[기능 확장]
-• 상세 계획• 상세 계획
-
-3단계
-[실용화]
-• 상세 계획• 상세 계획
-
-실무 적용 가능성
-• [현대모비스/협력사 적용 가능 영역]• [기대 효과]• [필요 조건]
-
-추가 개발 아이디어
-• [아이디어 1]• [아이디어 2]• [아이디어 3]
-MOBIUS BOOTCAMP 1기 | PBL 결과발표 | 9/10
-
---- Slide 10 ---
-
-
-
-Q & A
-질문과 답변
-[팀명]
-감사합니다
-MOBIUS BOOTCAMP 1기 | 현대모비스 x LIKELION
