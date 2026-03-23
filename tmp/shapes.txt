@@ -1,0 +1,103 @@
+Index: 0
+  Shape ID: 2
+  Name: Rectangle 1
+  Type: AUTO_SHAPE (1)
+  Text: 
+---
+Index: 1
+  Shape ID: 3
+  Name: TextBox 2
+  Type: TEXT_BOX (17)
+  Text: 05. 구현 결과
+---
+Index: 2
+  Shape ID: 4
+  Name: Rectangle 3
+  Type: AUTO_SHAPE (1)
+  Text: 
+---
+Index: 3
+  Shape ID: 6
+  Name: Rounded Rectangle 5
+  Type: AUTO_SHAPE (1)
+  Text: 
+---
+Index: 4
+  Shape ID: 21
+  Name: Rounded Rectangle 15
+  Type: AUTO_SHAPE (1)
+  Text: 
+---
+Index: 5
+  Shape ID: 22
+  Name: TextBox 21
+  Type: TEXT_BOX (17)
+  Text: 아키텍처 (Architecture)
+---
+Index: 6
+  Shape ID: 23
+  Name: Rounded Rectangle 22
+  Type: AUTO_SHAPE (1)
+  Text: 데이터 입력 (Sensor)
+Radar / Ultrasonic
+---
+Index: 7
+  Shape ID: 24
+  Name: TextBox 23
+  Type: TEXT_BOX (17)
+  Text: 
+• ISO 26262 ASIL B• HW Fault Detection
+---
+Index: 8
+  Shape ID: 25
+  Name: Right Arrow 24
+  Type: AUTO_SHAPE (1)
+  Text: 
+---
+Index: 9
+  Shape ID: 26
+  Name: Rounded Rectangle 25
+  Type: AUTO_SHAPE (1)
+  Text: 제어 판단 (ECU)
+F-07/F-08 Logic
+---
+Index: 10
+  Shape ID: 27
+  Name: TextBox 26
+  Type: TEXT_BOX (17)
+  Text: 
+• A-SPICE SWE.2• Risk Eval & Protection
+---
+Index: 11
+  Shape ID: 28
+  Name: Right Arrow 27
+  Type: AUTO_SHAPE (1)
+  Text: 
+---
+Index: 12
+  Shape ID: 29
+  Name: Rounded Rectangle 28
+  Type: AUTO_SHAPE (1)
+  Text: 최종 출력 (Actuator)
+Child Lock Motor
+---
+Index: 13
+  Shape ID: 30
+  Name: TextBox 29
+  Type: TEXT_BOX (17)
+  Text: 
+• Safe State Policy• SAFE_LOCKED (ON)
+---
+Index: 14
+  Shape ID: 31
+  Name: TextBox 30
+  Type: TEXT_BOX (17)
+  Text: 핵심 로직 (Core Logic)
+---
+Index: 15
+  Shape ID: 32
+  Name: Rectangle 31
+  Type: AUTO_SHAPE (1)
+  Text: /* F-07: Rear Risk Evaluation */
+bool isRawThreatA
+---
